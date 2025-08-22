@@ -1,18 +1,18 @@
-import type { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router'
+import MyTabs from 'pages/MyTabs.vue'
+import ErrorNotFound from 'pages/ErrorNotFound.vue'
+import MainLayout from 'layouts/MainLayout.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    component: MainLayout,
+    children: [{ path: '', component: MyTabs }],
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue'),
+    component: ErrorNotFound,
   },
-];
+]
 
-export default routes;
+export default routes
