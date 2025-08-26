@@ -73,6 +73,7 @@ const onDeleteHandler = (name: DialogProps['name']) => {
   dialogsStore.openDialog(name)
 }
 
+// TODO: переробити
 const editDialog = {
   name: `edit_${tab.id}`,
   title: `Редагування таби №- ${tab.id} «${tab.label}»`,
