@@ -5,7 +5,7 @@
         <div><img src="{{tab.iconUrl}}" /></div>
         <div>{{ tab.label }}</div>
       </div>
-      <div :class="$style.actions">
+      <div v-if="loginStore.isAuth" :class="$style.actions">
         <q-btn
           padding="xs"
           @click="onEditHandler(`edit_${tab.id}`)"
@@ -60,9 +60,11 @@ import Link from '../../components/link/indexPage.vue'
 import type { Tab } from '../../../../models/index.js'
 import { useDialogsStore } from 'src/stores/dialog'
 import type { DialogProps } from 'src/components/dialog/types'
+import { useLoginStore } from 'src/stores/login'
 
 const { tab } = defineProps<{ tab: Tab }>()
 const dialogsStore = useDialogsStore()
+const loginStore = useLoginStore()
 
 const onEditHandler = (name: DialogProps['name']) => {
   dialogsStore.openDialog(name)
