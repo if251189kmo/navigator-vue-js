@@ -1,17 +1,17 @@
 import type { RouteRecordRaw } from 'vue-router'
-import MyTabs from 'pages/MyTabs.vue'
-import ErrorNotFound from 'pages/ErrorNotFound.vue'
-import MainLayout from 'layouts/MainLayout.vue'
+import Home from 'pages/home/indexPage.vue'
+import PageNotFound from 'src/pages/PageNotFound/indexPage.vue'
+import PageWrapper from 'src/layouts/pageWrapper/indexPage.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: MainLayout,
-    children: [{ path: '', component: MyTabs }],
+    component: PageWrapper,
+    children: [{ path: '', component: Home }],
   },
   {
     path: '/:catchAll(.*)*',
-    component: ErrorNotFound,
+    component: PageNotFound,
   },
 ]
 

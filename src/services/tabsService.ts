@@ -1,13 +1,17 @@
 import { api } from 'boot/axios'
+import urls from 'src/constants/urls'
+import type { Tab } from 'src/models'
 
-export interface Tab {
-  id: number
-  label: string
-  iconUrl: string
-  order: number
+const getTabs = async () => {
+  try {
+    console.log('start progress')
+    const { data } = await api.get<Tab[]>(urls.tabs.get)
+    return data
+  } catch (err) {
+    console.error(err)
+  } finally {
+    console.log('finish progress')
+  }
 }
 
-export const getTabs = async (): Promise<Tab[]> => {
-  const { data } = await api.get<Tab[]>('/navigator/tabs')
-  return data
-}
+export { getTabs }

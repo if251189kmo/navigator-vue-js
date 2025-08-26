@@ -1,0 +1,21 @@
+.tab {
+  margin: 10px;
+  width: 45%;
+  background-color: rgba(127, 255, 212, 0.151);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.315);
+  color: green;
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .label {
+      display: flex;
+    }
+
+    .actions {
+      display: flex;
+    }
+  }
+}
