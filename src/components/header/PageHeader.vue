@@ -4,16 +4,16 @@
     <div :class="$style.logo"><img src="./../../assets/logo.png" /></div>
     <q-btn round color="secondary" @click="openLoginModal()" icon="navigation" />
   </div>
-  <Dialog v-bind="loginDialog">
+  <MyDialog v-bind="loginDialog">
     <template #content>
       <form>login: <input type="text" /> password: <input type="password" /></form>
       <q-btn color="warning" @click="login()" icon="navigation">login</q-btn>
     </template>
-  </Dialog>
+  </MyDialog>
 </template>
 
 <script setup lang="ts">
-import Dialog from '../../components/dialog/indexPage.vue'
+import MyDialog from '../../components/dialog/MyDialog.vue'
 import { useLoginStore } from 'src/stores/login'
 import labels from './json/index.json'
 import { useDialogsStore } from 'src/stores/dialog'
@@ -36,5 +36,17 @@ const loginDialog = {
 </script>
 
 <style module lang="scss">
-@import './styles.module.scss';
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .title {
+    font-size: 25px;
+  }
+
+  .logo {
+    width: 250px;
+  }
+}
 </style>

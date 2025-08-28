@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.tabs">
-    <Tab v-for="tab in homeStore.home.tabs" :key="tab.id" :tab="tab" />
+    <RenderTab v-for="tab in homeStore.home.tabs" :key="tab.id" :tab="tab" />
   </div>
 </template>
 
 <script setup lang="ts">
-import Tab from './components/tab/indexPage.vue'
+import RenderTab from '../../components/tab/RenderTab.vue'
 import { useHomeStore } from 'src/stores/home'
 
 const homeStore = useHomeStore()
@@ -15,5 +15,12 @@ void homeStore.fetchTabs()
 </script>
 
 <style module lang="scss">
-@import './styles.module.scss';
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  background-color: rgba(255, 255, 255, 0.699);
+  padding: 20px;
+}
 </style>

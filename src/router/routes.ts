@@ -1,13 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router'
-import Home from 'pages/home/indexPage.vue'
-import PageNotFound from 'src/pages/PageNotFound/indexPage.vue'
-import PageWrapper from 'src/layouts/pageWrapper/indexPage.vue'
+import HomePage from 'pages/home/HomePage.vue'
+import PageNotFound from 'src/pages/PageNotFound/PageNotFound.vue'
+import PageWrapper from 'src/layouts/pageWrapper/PageWrapper.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: PageWrapper,
-    children: [{ path: '', component: Home }],
+    children: [{ path: '', component: HomePage }],
   },
   {
     path: '/:catchAll(.*)*',

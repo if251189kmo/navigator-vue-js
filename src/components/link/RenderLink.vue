@@ -6,10 +6,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Link } from '../../../../models/index.js'
+import type { Link } from '../../models/index.js'
 defineProps<{ link: Link }>()
 </script>
 
 <style module lang="scss">
-@import './styles.module.scss';
+.link {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+}
 </style>

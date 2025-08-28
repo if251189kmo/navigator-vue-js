@@ -4,7 +4,7 @@ type Dialogs = Record<string, { open: boolean }>
 
 export const useDialogsStore = defineStore('dialogs', {
   state: () => ({
-    dialogs: { first: { name: 'first', open: true } } as Dialogs,
+    dialogs: {} as Dialogs,
   }),
   actions: {
     openDialog(name: string) {
@@ -13,7 +13,7 @@ export const useDialogsStore = defineStore('dialogs', {
     closeDialog(name: string) {
       delete this.dialogs[name]
     },
-    closeAll() {
+    closeAllDialogs() {
       this.dialogs = {}
     },
   },

@@ -33,7 +33,3 @@ const toolbarOpen = computed({
   },
 })
 </script>
-
-<style module lang="scss">
-@import './styles.module.scss';
-</style>
