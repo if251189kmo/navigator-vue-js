@@ -5,28 +5,20 @@
     <q-btn round color="secondary" @click="openLoginModal()" icon="navigation" />
   </div>
   <MyDialog v-bind="loginDialog">
-    <template #content>
-      <form>login: <input type="text" /> password: <input type="password" /></form>
-      <q-btn color="warning" @click="login()" icon="navigation">login</q-btn>
-    </template>
+    <template #content><LoginPage /></template>
   </MyDialog>
 </template>
 
 <script setup lang="ts">
+import LoginPage from 'src/pages/login/LoginPage.vue'
 import MyDialog from '../../components/dialog/MyDialog.vue'
-import { useLoginStore } from 'src/stores/login'
 import labels from './json/index.json'
 import { useDialogsStore } from 'src/stores/dialog'
 
 const dialogsStore = useDialogsStore()
-const loginStore = useLoginStore()
 
 const openLoginModal = () => {
   dialogsStore.openDialog(`login`)
-}
-
-const login = () => {
-  loginStore.fetchLogin()
 }
 
 const loginDialog = {
