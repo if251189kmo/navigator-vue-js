@@ -1,4 +1,5 @@
 type DialogProps = {
+  icon?: string
   name: string
   title?: string
 }

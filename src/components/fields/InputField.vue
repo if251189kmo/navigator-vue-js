@@ -39,14 +39,14 @@ const { value } = useField<string>(name)
 <style module lang="scss">
 .field {
   width: 300px;
+}
 
-  .label {
-    margin: 4px 4px 4px 34px;
-    font-weight: 500;
-  }
+.label {
+  margin: 4px 4px 4px 34px;
+  font-weight: 500;
+}
 
-  .error {
-    color: $negative;
-  }
+.error {
+  color: $negative;
 }
 </style>

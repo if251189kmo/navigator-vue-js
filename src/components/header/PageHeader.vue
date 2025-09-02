@@ -33,7 +33,6 @@ const logout = () => {
 
 const loginDialog = {
   name: `login`,
-  title: `Вхід до системи`,
 }
 </script>
 

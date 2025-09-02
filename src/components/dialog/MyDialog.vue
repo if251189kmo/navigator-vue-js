@@ -1,9 +1,8 @@
 <template>
   <q-dialog v-model="toolbarOpen">
     <q-card>
-      <q-toolbar>
-        <q-icon name="warning" color="warning" size="2rem" />
-
+      <q-toolbar v-if="title">
+        <q-icon v-if="icon" name="warning" color="warning" size="2rem" />
         <q-toolbar-title>
           <span>{{ title }}</span>
         </q-toolbar-title>
@@ -22,7 +21,7 @@ import { useDialogsStore } from 'src/stores/dialog'
 import type { DialogProps } from './types'
 
 const tab = defineProps<DialogProps>()
-const { name, title } = tab
+const { name, icon, title } = tab
 const openDialog = useDialogsStore()
 
 const toolbarOpen = computed({
