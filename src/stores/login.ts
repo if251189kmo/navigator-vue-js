@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import type { LoginForm } from 'src/pages/login/types'
+import { loginUser } from 'src/services/loginService'
 
 // TODO: допрацювати
 export const useLoginStore = defineStore('login', {
@@ -7,8 +9,14 @@ export const useLoginStore = defineStore('login', {
     isAuth: false,
   }),
   actions: {
-    fetchLogin() {
-      this.isAuth = !this.isAuth
+    async fetchLogin(form: LoginForm) {
+      const token = await loginUser(form)
+
+      this.token = token || null
+      this.isAuth = !!token
     },
+  },
+  getters: {
+    getAuth: (state) => state.isAuth,
   },
 })

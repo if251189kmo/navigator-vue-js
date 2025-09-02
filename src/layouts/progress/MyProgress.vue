@@ -17,6 +17,7 @@ import type { ProgressProps } from './types'
 
 const { name } = defineProps<ProgressProps>()
 const store = useProgressStore()
+
 const show = computed(() => store.progresses[name]?.run)
 </script>
 <style module lang="scss">
@@ -29,7 +30,7 @@ const show = computed(() => store.progresses[name]?.run)
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    z-index: 9999;
     background-color: rgba(221, 221, 221, 0.685);
     display: flex;
     justify-content: center;

@@ -5,7 +5,7 @@
         <div><img src="{{tab.iconUrl}}" /></div>
         <div>{{ tab.label }}</div>
       </div>
-      <div v-if="loginStore.isAuth" :class="$style.actions">
+      <div v-if="getAuth" :class="$style.actions">
         <q-btn
           padding="xs"
           @click="dialogsStore.openDialog(editDialog.name)"
@@ -42,10 +42,12 @@ import DeleteTab from '../../components/tab/DeleteTab.vue'
 import type { Tab } from '../../models/index.js'
 import { useDialogsStore } from 'src/stores/dialog'
 import { useLoginStore } from 'src/stores/login'
+import { storeToRefs } from 'pinia'
 
 const { tab } = defineProps<{ tab: Tab }>()
 const dialogsStore = useDialogsStore()
 const loginStore = useLoginStore()
+const { getAuth } = storeToRefs(loginStore)
 
 const editDialog = {
   name: `edit_${tab.id}`,
