@@ -13,7 +13,6 @@ export const useHomeStore = defineStore('home', {
       this.home.tabs = (await getTabs()) || []
     },
   },
-  // TODO: Selectors
   getters: {
     getTabs: (state) => state.home.tabs,
   },

@@ -1,15 +1,16 @@
 <template>
   <div :class="$style.tabs">
-    <RenderTab v-for="tab in homeStore.home.tabs" :key="tab.id" :tab="tab" />
+    <RenderTab v-for="tab in getTabs" :key="tab.id" :tab="tab" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import RenderTab from '../../components/tab/RenderTab.vue'
 import { useHomeStore } from 'src/stores/home'
 
 const homeStore = useHomeStore()
-
+const { getTabs } = storeToRefs(homeStore)
 // TODO: почитати за життя компонента на Vue
 void homeStore.fetchTabs()
 </script>
