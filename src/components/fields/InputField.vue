@@ -1,12 +1,12 @@
 <template>
   <div :class="classes || $style.field">
-    <label :class="[$style.label, !!errors?.[name] ? $style.error : '']">{{ label }}</label>
+    <label :class="[$style.label, !!error ? $style.error : '']">{{ label }}</label>
     <q-input
       :outlined="outlined"
       :type="type"
       :dense="dense"
-      :error="!!errors?.[name]"
-      :error-message="errors?.[name]"
+      :error="!!error"
+      :error-message="error"
       v-model="value"
       v-bind="qInputProps"
     >
@@ -33,6 +33,7 @@ const {
   ...qInputProps
 } = defineProps<InputField>()
 
+const error = errors?.[name]
 const { value } = useField<string>(name)
 </script>
 

@@ -2,10 +2,16 @@ import { defineStore } from 'pinia'
 import type { Tab } from 'src/models'
 import { getTabs } from 'src/services/tabsService'
 
+type HomeStore = {
+  home: {
+    tabs: Tab[]
+  }
+}
+
 export const useHomeStore = defineStore('home', {
-  state: () => ({
+  state: (): HomeStore => ({
     home: {
-      tabs: [] as Tab[],
+      tabs: [],
     },
   }),
   actions: {

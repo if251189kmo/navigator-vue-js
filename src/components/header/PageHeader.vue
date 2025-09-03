@@ -2,7 +2,7 @@
   <div :class="$style.header">
     <h1 :class="$style.title">{{ labels.title }}</h1>
     <div :class="$style.logo"><img src="./../../assets/logo.png" /></div>
-    <q-btn v-if="getAuth" round color="secondary" @click="logout" icon="navigation" />
+    <q-btn v-if="getAuth" round color="negative" @click="logout" icon="logout" />
     <q-btn v-else round color="primary" @click="openLoginModal" icon="navigation" />
   </div>
   <MyDialog v-bind="loginDialog">
@@ -17,22 +17,24 @@ import labels from './json/index.json'
 import { useDialogsStore } from 'src/stores/dialog'
 import { useLoginStore } from 'src/stores/login'
 import { storeToRefs } from 'pinia'
+import Dialogs from 'src/constants/dialogs'
 
+const { LOGIN_DIALOG } = Dialogs
 const dialogsStore = useDialogsStore()
 const loginStore = useLoginStore()
 
 const { getAuth } = storeToRefs(loginStore)
 
 const openLoginModal = () => {
-  dialogsStore.openDialog(`login`)
+  dialogsStore.openDialog(LOGIN_DIALOG)
 }
 
 const logout = () => {
-  console.log(`User logged out`)
+  void loginStore.logout()
 }
 
 const loginDialog = {
-  name: `login`,
+  name: LOGIN_DIALOG,
 }
 </script>
 

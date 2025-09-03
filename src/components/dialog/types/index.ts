@@ -1,6 +1,8 @@
+import type Dialogs from 'src/constants/dialogs'
+
 type DialogProps = {
   icon?: string
-  name: string
+  name: Dialogs | string
   title?: string
 }
 

@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 
-type Progresses = Record<string, { run: boolean }>
+type ProgressesStore = {
+  progresses: Record<string, { run: boolean }>
+}
 
 export const useProgressStore = defineStore('progresses', {
-  state: () => ({
-    progresses: {} as Progresses,
+  state: (): ProgressesStore => ({
+    progresses: {},
   }),
   actions: {
     openProgress(name: string) {

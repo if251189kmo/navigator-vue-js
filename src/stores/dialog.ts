@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 
-type Dialogs = Record<string, { open: boolean }>
+type DialogsStore = { dialogs: Record<string, { open: boolean }> }
 
 export const useDialogsStore = defineStore('dialogs', {
-  state: () => ({
-    dialogs: {} as Dialogs,
+  state: (): DialogsStore => ({
+    dialogs: {},
   }),
   actions: {
     openDialog(name: string) {

@@ -34,7 +34,9 @@ import { useLoginStore } from 'src/stores/login'
 import type { LoginForm } from './types'
 import InputField from 'src/components/fields/InputField.vue'
 import { useDialogsStore } from 'src/stores/dialog'
+import Dialogs from 'src/constants/dialogs'
 
+const { LOGIN_DIALOG } = Dialogs
 const loginStore = useLoginStore()
 const openDialog = useDialogsStore()
 
@@ -45,15 +47,18 @@ const schema = yup.object({
 
 const { handleSubmit, errors } = useForm<LoginForm>({
   validationSchema: schema,
+  initialValues: {
+    login: 'us10351pr',
+    password: '123123123',
+  },
 })
 
 const onSubmit = handleSubmit((form: LoginForm) => {
-  // "login": "us10351pr", "password": "123123123"
   void loginStore.fetchLogin(form)
 })
 
 const onClose = () => {
-  void openDialog.closeDialog(`login`)
+  void openDialog.closeDialog(LOGIN_DIALOG)
 }
 </script>
 

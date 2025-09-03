@@ -43,18 +43,20 @@ import type { Tab } from '../../models/index.js'
 import { useDialogsStore } from 'src/stores/dialog'
 import { useLoginStore } from 'src/stores/login'
 import { storeToRefs } from 'pinia'
+import Dialogs from 'src/constants/dialogs'
 
+const { EDIT_TAB, DELETE_TAB } = Dialogs
 const { tab } = defineProps<{ tab: Tab }>()
 const dialogsStore = useDialogsStore()
 const loginStore = useLoginStore()
 const { getAuth } = storeToRefs(loginStore)
 
 const editDialog = {
-  name: `edit_${tab.id}`,
+  name: `${EDIT_TAB}${tab.id}`,
   title: `Редагування таби №- ${tab.id} «${tab.label}»`,
 }
 const deleteDialog = {
-  name: `delete_${tab.id}`,
+  name: `${DELETE_TAB}${tab.id}`,
   title: `Редагування таби №- ${tab.id} «${tab.label}»`,
 }
 </script>
