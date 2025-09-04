@@ -18,13 +18,14 @@ export const useLoginStore = defineStore('login', {
   }),
   actions: {
     async fetchLogin(form: LoginForm) {
-      const data = await loginUser(form)
+      const token = await loginUser(form)
 
-      const token = data ?? ''
-      localStorage.setItem(AUTH_USER, token)
+      if (token) {
+        localStorage.setItem(AUTH_USER, token)
 
-      this.token = token
-      this.isAuth = true
+        this.token = token
+        this.isAuth = true
+      }
     },
     logout() {
       localStorage.removeItem(AUTH_USER)

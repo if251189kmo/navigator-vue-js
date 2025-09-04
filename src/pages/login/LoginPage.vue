@@ -1,27 +1,27 @@
 <template>
   <div :class="$style.login">
     <header :class="$style.header">
-      <h1>Авторизуватись</h1>
+      <h1>{{ title }}</h1>
     </header>
     <q-form @submit.prevent="onSubmit" :class="$style.form">
       <InputField
         :classes="$style.field"
         name="login"
-        label="Login"
+        v-bind="fields.login"
         beforeIcon="person"
         :errors="errors"
       />
       <InputField
         :classes="$style.field"
         name="password"
-        label="Password"
+        v-bind="fields.password"
         type="password"
         beforeIcon="lock"
         :errors="errors"
       />
       <section :class="$style.buttons">
-        <q-btn type="submit" color="positive" label="Авторизуватись" />
-        <q-btn color="negative" @click="onClose" label="Відмінити" />
+        <q-btn type="submit" color="positive" v-bind="buttons.login" />
+        <q-btn color="negative" @click="onClose" v-bind="buttons.cancel" />
       </section>
     </q-form>
   </div>
@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
+import { title, buttons, fields } from './json/index.json'
 import { useLoginStore } from 'src/stores/login'
 import type { LoginForm } from './types'
 import InputField from 'src/components/fields/InputField.vue'
@@ -41,8 +42,8 @@ const loginStore = useLoginStore()
 const openDialog = useDialogsStore()
 
 const schema = yup.object({
-  login: yup.string().required('Login is required'),
-  password: yup.string().min(6, 'Min 6 characters').required('Password is required'),
+  login: yup.string().required(fields.login.validation.required),
+  password: yup.string().required(fields.password.validation.required),
 })
 
 const { handleSubmit, errors } = useForm<LoginForm>({

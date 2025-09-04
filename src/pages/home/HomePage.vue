@@ -22,6 +22,7 @@ void homeStore.fetchTabs()
   justify-content: space-around;
 
   background-color: rgba(255, 255, 255, 0.699);
+  border-radius: 4px 4px 50px 50px;
   padding: 20px;
 }
 </style>

@@ -3,6 +3,7 @@ import type { QInputProps } from 'quasar'
 type InputField = {
   name: string
   classes?: string
+  placeholder?: string
   label: QInputProps['label']
   errors?: Record<string, string | undefined>
   beforeIcon?: string

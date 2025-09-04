@@ -1,10 +1,15 @@
 <template>
   <div :class="$style.header">
     <h1 :class="$style.title">{{ labels.title }}</h1>
-    <div :class="$style.logo"><img src="./../../assets/logo.png" /></div>
-    <q-btn v-if="getAuth" round color="negative" @click="logout" icon="logout" />
-    <q-btn v-else round color="primary" @click="openLoginModal" icon="navigation" />
+    <div :class="$style.logoBox">
+      <div :class="$style.logo"><img src="./../../assets/logo.png" /></div>
+      <div :class="$style.buttons">
+        <q-btn v-if="getAuth" padding="sm" color="negative" @click="logout" icon="logout" />
+        <q-btn v-else padding="sm" color="primary" @click="openLoginModal" icon="login" />
+      </div>
+    </div>
   </div>
+
   <MyDialog v-bind="loginDialog">
     <template #content><LoginPage /></template>
   </MyDialog>
@@ -42,14 +47,28 @@ const loginDialog = {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  width: 100%;
+  margin: 50px 0 20px 0;
+  padding: 20px 50px;
+  border-radius: 50px 50px 4px 4px;
+  background-color: rgba(255, 255, 255, 0.699);
 
   .title {
     font-size: 25px;
   }
 
-  .logo {
-    width: 250px;
+  .logoBox {
+    display: flex;
+    align-items: center;
+
+    .logo {
+      width: 250px;
+    }
+
+    .buttons {
+      margin: 0 0 0 10px;
+    }
   }
 }
 </style>

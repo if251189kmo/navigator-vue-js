@@ -1,0 +1,19 @@
+{
+  "title": "Авторизація",
+  "fields": {
+    "login": {
+      "label": "Ім'я користувача",
+      "placeholder": "Введіть ім'я користувача",
+      "validation": { "required": "Обов'язкове поле" }
+    },
+    "password": {
+      "label": "Пароль",
+      "placeholder": "Введіть пароль",
+      "validation": { "required": "Обов'язкове поле" }
+    }
+  },
+  "buttons": {
+    "login": { "label": "Авторизуватись" },
+    "cancel": { "label": "Відмінити" }
+  }
+}
