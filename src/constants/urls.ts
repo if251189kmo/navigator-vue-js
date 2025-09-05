@@ -5,6 +5,9 @@ const urls = {
   tabs: {
     get: '/navigator/tabs',
   },
+  links: {
+    get: '/navigator/links',
+  },
 }
 
 export default urls

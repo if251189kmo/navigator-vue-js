@@ -22,7 +22,7 @@
     </q-card-section>
     <q-separator dark inset />
     <q-card-section>
-      <RenderLink v-for="link in tab.groups" :key="link.id" :link="link" />
+      <RenderLink v-for="group in tab.groups" :key="group.id" :group="group" />
     </q-card-section>
   </q-card>
 
@@ -39,14 +39,14 @@ import MyDialog from '../../components/dialog/MyDialog.vue'
 import RenderLink from '../../components/link/RenderLink.vue'
 import EditTab from '../../components/tab/EditTab.vue'
 import DeleteTab from '../../components/tab/DeleteTab.vue'
-import type { Tab } from '../../models/index.js'
 import { useDialogsStore } from 'src/stores/dialog'
 import { useLoginStore } from 'src/stores/login'
 import { storeToRefs } from 'pinia'
 import Dialogs from 'src/constants/dialogs'
+import type { RenderTabProps } from './types'
 
 const { EDIT_TAB, DELETE_TAB } = Dialogs
-const { tab } = defineProps<{ tab: Tab }>()
+const { tab } = defineProps<RenderTabProps>()
 const dialogsStore = useDialogsStore()
 const loginStore = useLoginStore()
 const { getAuth } = storeToRefs(loginStore)
@@ -57,7 +57,7 @@ const editDialog = {
 }
 const deleteDialog = {
   name: `${DELETE_TAB}${tab.id}`,
-  title: `Редагування таби №- ${tab.id} «${tab.label}»`,
+  title: `Видалення таби №- ${tab.id} «${tab.label}»`,
 }
 </script>
 

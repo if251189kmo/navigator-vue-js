@@ -11,7 +11,7 @@ import { useHomeStore } from 'src/stores/home'
 
 const homeStore = useHomeStore()
 const { getTabs } = storeToRefs(homeStore)
-// TODO: почитати за життя компонента на Vue
+
 void homeStore.fetchTabs()
 </script>
 
@@ -26,3 +26,4 @@ void homeStore.fetchTabs()
   padding: 20px;
 }
 </style>
+// TODO: почитати за життя компонента на Vue

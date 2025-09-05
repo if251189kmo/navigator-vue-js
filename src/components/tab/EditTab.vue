@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Tab } from '../../models/index.js'
+import type { RenderTabProps } from './types/index.js'
 
-const tab = defineProps<Tab>()
+const tab = defineProps<RenderTabProps['tab']>()
 </script>

@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { useField } from 'vee-validate'
-import type { InputField } from './types'
+import type { InputFieldProps } from './types'
 
 const {
   name,
@@ -31,7 +31,7 @@ const {
   outlined = true,
   dense = true,
   ...qInputProps
-} = defineProps<InputField>()
+} = defineProps<InputFieldProps>()
 
 const { value } = useField<string>(name)
 </script>

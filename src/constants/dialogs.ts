@@ -5,6 +5,10 @@ enum Dialogs {
   EDIT_TAB = 'edit_tab_',
   DELETE_TAB = 'delete_tab_',
 
+  // Link
+  EDIT_LINK = 'edit_link_',
+  DELETE_LINK = 'delete_link_',
+
   // Progress
   PROGRESS_PAGE = 'progress_page',
 }

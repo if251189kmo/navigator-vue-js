@@ -1,6 +1,6 @@
 import type { QInputProps } from 'quasar'
 
-type InputField = {
+type InputFieldProps = {
   name: string
   classes?: string
   placeholder?: string
@@ -12,4 +12,4 @@ type InputField = {
   dense?: QInputProps['dense']
 }
 
-export type { InputField }
+export type { InputFieldProps }
