@@ -1,19 +1,21 @@
 <template>
   <div :class="classes || $style.field">
     <label :class="[$style.label, !!errors?.[name] ? $style.error : '']">{{ label }}</label>
-    <q-input
-      :outlined="outlined"
-      :type="type"
-      :dense="dense"
-      :error="!!errors?.[name]"
-      :error-message="errors?.[name]"
-      v-model="value"
-      v-bind="qInputProps"
-    >
-      <template v-slot:before>
-        <q-icon :name="beforeIcon" />
-      </template>
-    </q-input>
+    <slot>
+      <q-input
+        :outlined="outlined"
+        :type="type"
+        :dense="dense"
+        :error="!!errors?.[name]"
+        :error-message="errors?.[name]"
+        v-model="value"
+        v-bind="qInputProps"
+      >
+        <template v-slot:before>
+          <q-icon :name="beforeIcon" />
+        </template>
+      </q-input>
+    </slot>
   </div>
 </template>
 

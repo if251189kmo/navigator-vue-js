@@ -22,4 +22,14 @@ const getTabs = async () => {
   }
 }
 
-export { getTabs }
+const getLinks = async () => {
+  try {
+    const { data } = await api.get<HomeStore['home']['links']>(urls.links.get)
+
+    return data
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export { getTabs, getLinks }

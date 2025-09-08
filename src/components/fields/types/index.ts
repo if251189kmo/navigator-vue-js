@@ -1,4 +1,4 @@
-import type { QInputProps } from 'quasar'
+import type { QInputProps, QSelectProps } from 'quasar'
 
 type InputFieldProps = {
   name: string
@@ -6,10 +6,24 @@ type InputFieldProps = {
   placeholder?: string
   label: QInputProps['label']
   errors?: Record<string, string | undefined>
-  beforeIcon?: string
+  beforeIcon: string
   type?: QInputProps['type']
   outlined?: QInputProps['outlined']
   dense?: QInputProps['dense']
 }
 
-export type { InputFieldProps }
+type SelectFieldProps = {
+  name: string
+  classes?: string
+  placeholder?: string
+  label: QSelectProps['label']
+  options: QSelectProps['options']
+  errors?: Record<string, string | undefined>
+  beforeIcon: string
+  outlined?: QInputProps['outlined']
+  multiple?: QSelectProps['multiple']
+  useChips?: QSelectProps['useChips']
+  dense?: QSelectProps['dense']
+}
+
+export type { InputFieldProps, SelectFieldProps }

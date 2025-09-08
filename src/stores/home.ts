@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import type { LinkServer, TabServer } from 'src/models'
-import { getTabs } from 'src/services/tabsService'
+import { getLinks, getTabs } from 'src/services/tabsService'
 
 type HomeStore = {
   home: {
@@ -23,6 +23,11 @@ export const useHomeStore = defineStore('home', {
       this.home.tabs = data?.tabs || []
       this.home.links = data?.links || []
     },
+    async fetchLinks() {
+      const links = await getLinks()
+
+      this.home.links = links || []
+    },
   },
   getters: {
     getTabs: (state) => {
@@ -33,7 +38,8 @@ export const useHomeStore = defineStore('home', {
           links: state.home.links.filter(l => group.linksIds.includes(l.id))
         }))
       }))
-    }
+    },
+    getLinks: (state) => state.home.links
   }
 })
 

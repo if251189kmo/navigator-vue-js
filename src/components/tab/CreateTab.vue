@@ -14,7 +14,20 @@
           <q-btn color="primary">Добавити блок із ссилками</q-btn>
         </div>
       </section>
-      <section :class="$style.groups">groups</section>
+      <section :class="$style.groups">
+        <SelectField
+          name="customSelect"
+          beforeIcon="inventory"
+          label="Вибери елементи"
+          multiple
+          useChips
+          :options="[
+            { id: 1, label: 'test' },
+            { id: 2, label: 'test2' },
+          ]"
+          :errors="errors"
+        />
+      </section>
       <section :class="$style.buttons">
         <q-btn type="submit" color="positive" v-bind="buttons.save" />
         <q-btn color="negative" @click="onClose" v-bind="buttons.cancel" />
@@ -30,6 +43,9 @@ import { fields, buttons } from './json/index.json'
 import { useDialogsStore } from 'src/stores/dialog.js'
 import type { CreateTabProps } from './types/index.js'
 import InputField from '../fields/InputField.vue'
+import { useHomeStore } from 'src/stores/home'
+import { storeToRefs } from 'pinia'
+import SelectField from '../fields/SelectField.vue'
 
 type CreateTabForm = {
   label: string
@@ -41,7 +57,11 @@ type CreateTabForm = {
 }
 
 const openDialog = useDialogsStore()
+const homeStore = useHomeStore()
 const { dialogName } = defineProps<CreateTabProps>()
+const { getLinks } = storeToRefs(homeStore)
+
+console.log(getLinks.value)
 
 const schema = yup.object({
   label: yup.string().required(fields.label.validation.required),
@@ -84,7 +104,7 @@ const onClose = () => {
   }
 
   .form > .groups {
-    background-color: rgba(255, 0, 0, 0.452);
+    background-color: rgba(81, 255, 0, 0.192);
   }
 
   .form > .buttons {
