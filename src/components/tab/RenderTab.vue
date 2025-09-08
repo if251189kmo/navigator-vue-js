@@ -2,23 +2,52 @@
   <q-card :class="$style.tab" dark bordered>
     <q-card-section :class="$style.title">
       <div :class="$style.label">
-        <div><img src="{{tab.iconUrl}}" /></div>
-        <div>{{ tab.label }}</div>
+        <div :class="$style.icon"><img src="{{tab.iconUrl}}" /></div>
+        <div :class="$style.text">{{ tab.label }}</div>
       </div>
-      <div v-if="getAuth" :class="$style.actions">
-        <q-btn
-          padding="xs"
-          @click="dialogsStore.openDialog(editDialog.name)"
-          color="warning"
-          icon="navigation"
-        />
-        <q-btn
-          padding="xs"
-          @click="dialogsStore.openDialog(deleteDialog.name)"
-          color="primary"
-          icon="eco"
-        />
-      </div>
+
+      <q-btn-dropdown :class="$style.actions" v-if="getAuth" flat color="positive" icon="settings">
+        <q-list>
+          <q-item clickable v-close-popup>
+            <q-item-section>
+              <q-btn
+                flat
+                label="Create"
+                title="Create"
+                @click="dialogsStore.openDialog(createDialog.name)"
+                color="positive"
+                icon="add"
+              />
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-close-popup>
+            <q-item-section>
+              <q-btn
+                flat
+                label="Edit"
+                title="Edit"
+                @click="dialogsStore.openDialog(editDialog.name)"
+                color="warning"
+                icon="edit"
+              />
+            </q-item-section>
+          </q-item>
+
+          <q-item clickable v-close-popup>
+            <q-item-section>
+              <q-btn
+                flat
+                label="Delete"
+                title="Delete"
+                @click="dialogsStore.openDialog(deleteDialog.name)"
+                color="negative"
+                icon="delete"
+              />
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
     </q-card-section>
     <q-separator dark inset />
     <q-card-section>
@@ -32,6 +61,9 @@
   <MyDialog v-bind="deleteDialog">
     <template #content><DeleteTab v-bind="tab" /></template>
   </MyDialog>
+  <MyDialog v-bind="createDialog">
+    <template #content><CreateTab :dialogName="createDialog.name" /></template>
+  </MyDialog>
 </template>
 
 <script setup lang="ts">
@@ -44,8 +76,10 @@ import { useLoginStore } from 'src/stores/login'
 import { storeToRefs } from 'pinia'
 import Dialogs from 'src/constants/dialogs'
 import type { RenderTabProps } from './types'
+import { dialogs } from './json/index.json'
+import CreateTab from './CreateTab.vue'
 
-const { EDIT_TAB, DELETE_TAB } = Dialogs
+const { EDIT_TAB, CREATE_TAB, DELETE_TAB } = Dialogs
 const { tab } = defineProps<RenderTabProps>()
 const dialogsStore = useDialogsStore()
 const loginStore = useLoginStore()
@@ -53,11 +87,17 @@ const { getAuth } = storeToRefs(loginStore)
 
 const editDialog = {
   name: `${EDIT_TAB}${tab.id}`,
-  title: `Редагування таби №- ${tab.id} «${tab.label}»`,
+  title: `${dialogs.edit.title} ${tab.id} «${tab.label}»`,
 }
+
 const deleteDialog = {
   name: `${DELETE_TAB}${tab.id}`,
-  title: `Видалення таби №- ${tab.id} «${tab.label}»`,
+  title: `${dialogs.delete.title} ${tab.id} «${tab.label}»`,
+}
+
+const createDialog = {
+  name: `${CREATE_TAB}${tab.id}`,
+  title: `${dialogs.create.title}`,
 }
 </script>
 
@@ -67,7 +107,6 @@ const deleteDialog = {
   width: 45%;
   background-color: rgba(127, 255, 212, 0.151);
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.315);
-  color: green;
 
   .title {
     display: flex;
@@ -76,6 +115,14 @@ const deleteDialog = {
 
     .label {
       display: flex;
+
+      .icon {
+        margin-right: 10px;
+      }
+
+      .text {
+        color: black;
+      }
     }
 
     .actions {

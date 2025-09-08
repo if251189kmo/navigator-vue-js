@@ -1,5 +1,11 @@
 import type { RenderTabProps } from "src/components/tab/types"
 
-type RenderLinksProps = { group: RenderTabProps['tab']['groups'][number] }
+type LinksProps = {
+  group: RenderTabProps['tab']['groups'][number]
+}
 
-export type { RenderLinksProps }
+type RenderLinksProps = LinksProps
+type EditLinksProps = LinksProps
+type DeleteLinksProps = LinksProps
+
+export type { EditLinksProps, DeleteLinksProps, RenderLinksProps }

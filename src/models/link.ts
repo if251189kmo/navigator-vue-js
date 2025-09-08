@@ -1,4 +1,4 @@
-type Link = {
+type LinkServer = {
   id: number
   code?: number
   label: string
@@ -7,4 +7,6 @@ type Link = {
   order: number
 }
 
-export type { Link }
+type LinkUi = LinkServer
+
+export type { LinkServer, LinkUi }

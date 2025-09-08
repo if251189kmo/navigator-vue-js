@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
-import type { Link, Tab } from 'src/models'
+import type { LinkServer, TabServer } from 'src/models'
 import { getTabs } from 'src/services/tabsService'
 
 type HomeStore = {
   home: {
-    tabs: Tab[]
-    links: Link[]
+    tabs: TabServer[]
+    links: LinkServer[]
   }
 }
 
@@ -36,3 +36,5 @@ export const useHomeStore = defineStore('home', {
     }
   }
 })
+
+export type { HomeStore }

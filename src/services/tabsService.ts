@@ -1,6 +1,6 @@
 import { api } from 'boot/axios'
 import urls from 'src/constants/urls'
-import type { Link, Tab } from 'src/models'
+import type { HomeStore } from 'src/stores/home'
 import { useProgressStore } from 'src/stores/progress'
 
 const getTabs = async () => {
@@ -10,8 +10,8 @@ const getTabs = async () => {
     progressStore.openProgress('page-progress')
 
     const [{ data: tabs }, { data: links }] = await Promise.all([
-      api.get<Tab[]>(urls.tabs.get),
-      api.get<Link[]>(urls.links.get),
+      api.get<HomeStore['home']['tabs']>(urls.tabs.get),
+      api.get<HomeStore['home']['links']>(urls.links.get),
     ])
 
     return { tabs, links }

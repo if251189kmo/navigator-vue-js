@@ -1,6 +1,6 @@
-import type { Link } from "./link";
+import type { LinkServer, LinkUi } from "./link";
 
-type Tab = {
+type TabServer = {
   id: number;
   label: string;
   iconUrl: string;
@@ -8,8 +8,12 @@ type Tab = {
   groups: {
     id: number;
     name: string;
-    linksIds: Link['id'][];
+    linksIds: LinkServer['id'][];
   }[];
 };
 
-export type { Tab }
+type TabUi = Omit<TabServer, "groups"> & {
+  groups: (TabServer["groups"][number] & { links: LinkUi[] })[]
+}
+
+export type { TabServer, TabUi }

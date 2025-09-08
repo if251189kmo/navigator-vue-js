@@ -1,0 +1,18 @@
+{
+  "dialogs": {
+    "edit": { "title": "Редагування таби №-" },
+    "delete": { "title": "Видалення таби №- " },
+    "create": { "title": "Створення нової таби" }
+  },
+  "fields": {
+    "label": {
+      "label": "Назва секції",
+      "placeholder": "Введіть назва секції",
+      "validation": { "required": "Обов'язкове поле" }
+    }
+  },
+  "buttons": {
+    "save": { "label": "Зберегти" },
+    "cancel": { "label": "Відмінити" }
+  }
+}

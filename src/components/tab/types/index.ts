@@ -1,10 +1,13 @@
-import type { Link, Tab } from "src/models"
+import type { DialogProps } from "src/components/dialog/types"
+import type { TabUi } from "src/models/tab"
 
-type RenderTabProps = {
-  tab: Omit<Tab, "groups"> & {
-    groups: (Tab["groups"][number] & { links: Link[] })[]
-  }
+type TabProps = {
+  tab: TabUi
 }
 
+type RenderTabProps = TabProps
+type EditTabProps = TabProps['tab']
+type DeleteTabProps = TabProps['tab']
+type CreateTabProps = { dialogName: DialogProps['name'] }
 
-export type { RenderTabProps }
+export type { RenderTabProps, EditTabProps, DeleteTabProps, CreateTabProps }

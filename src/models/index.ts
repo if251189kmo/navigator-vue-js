@@ -1,4 +1,4 @@
-import type { Link } from "./link";
-import type { Tab } from "./tab";
-// TODO: подумати чи треба
-export type { Tab, Link }
+import type { LinkServer, LinkUi } from "./link";
+import type { TabServer, TabUi } from "./tab";
+
+export type { TabUi, TabServer, LinkServer, LinkUi }

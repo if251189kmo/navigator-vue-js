@@ -4,6 +4,7 @@ enum Dialogs {
   // Tab
   EDIT_TAB = 'edit_tab_',
   DELETE_TAB = 'delete_tab_',
+  CREATE_TAB = 'create_tab_',
 
   // Link
   EDIT_LINK = 'edit_link_',

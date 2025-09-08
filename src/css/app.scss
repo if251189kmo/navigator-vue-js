@@ -50,3 +50,7 @@ body {
     padding: 2px 2px 2px 4px;
   }
 }
+
+.q-dialog__inner--minimized > div {
+  max-width: inherit;
+}
