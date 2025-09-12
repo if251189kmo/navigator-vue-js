@@ -3,7 +3,7 @@
     <label :class="[$style.label, !!errors?.[name] ? $style.error : '']">{{ label }}</label>
     <q-select
       :dense="dense"
-      v-model="value"
+      v-model="selectedValue"
       :error="!!errors?.[name]"
       :error-message="errors?.[name]"
       :outlined="outlined"
@@ -26,7 +26,7 @@
 import { useField } from 'vee-validate'
 import type { SelectFieldProps } from './types'
 import { useHomeStore } from 'src/stores/home'
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const {
   name,
@@ -34,6 +34,7 @@ const {
   classes,
   errors,
   beforeIcon,
+  value,
   outlined = true,
   dense = true,
   options = [],
@@ -42,9 +43,17 @@ const {
   ...qInputProps
 } = defineProps<SelectFieldProps>()
 
-const { value } = useField<string>(name)
+type SelectItem = { id: number; label: string }
+type SelectValue = SelectItem | SelectItem[]
+
+const field = useField<SelectValue>(name)
 const homeStore = useHomeStore()
 const loading = ref(false)
+
+const selectedValue = computed({
+  get: () => value || field.value.value,
+  set: (v: SelectValue) => (field.value.value = v),
+})
 
 const loadOptions = async () => {
   loading.value = true
@@ -54,6 +63,13 @@ const loadOptions = async () => {
     loading.value = false
   }
 }
+
+watch(
+  () => value,
+  (val) => {
+    if (val !== undefined) field.value.value = val
+  },
+)
 </script>
 
 <style module lang="scss">

@@ -9,10 +9,18 @@
       "label": "Назва секції",
       "placeholder": "Введіть назва секції",
       "validation": { "required": "Обов'язкове поле" }
+    },
+    "groups": {
+      "label": "Групи посилань",
+      "placeholder": "Виберіть посилання",
+      "validation": { "required": "Обов'язкове поле" }
     }
   },
   "buttons": {
     "save": { "label": "Зберегти" },
-    "cancel": { "label": "Відмінити" }
+    "cancel": { "label": "Відмінити" },
+    "deleteBlock": { "label": "Видалити блок" },
+    "createBlock": { "label": "Добавити блок із ссилками" },
+    "changeIcon": { "label": "Змінити іконку" }
   }
 }

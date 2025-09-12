@@ -16,6 +16,7 @@ type SelectFieldProps = {
   name: string
   classes?: string
   placeholder?: string
+  value?: { id: number; label: string }[]
   label: QSelectProps['label']
   options: QSelectProps['options']
   errors?: Record<string, string | undefined>
