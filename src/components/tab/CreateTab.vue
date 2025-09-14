@@ -32,38 +32,16 @@
             v-bind="fields.groups"
           >
             <template #option="option">
-              <q-item v-bind="option.itemProps">
-                <q-item-section side>
-                  <q-checkbox
-                    :model-value="option.selected"
-                    @update:model-value="option.toggleOption(option.opt)"
-                  />
-                </q-item-section>
-                <q-item-label :class="$style.itemLabel">{{ option.opt.id }}</q-item-label>
-                <q-item-label :class="$style.itemLabel">{{ option.opt.code }}</q-item-label>
-                <q-item-label :class="$style.itemLabel">{{ option.opt.label }}</q-item-label>
-                <q-item-label :class="$style.itemLabel">{{ option.opt.new }}</q-item-label>
-                <q-item-label :class="$style.itemLabel">{{ option.opt.url }}</q-item-label>
-              </q-item>
+              <LinksOptions v-bind="option" />
             </template>
 
-            <template #selected="selected">
-              <q-chip
-                v-if="selected.index < 3"
-                dense
-                square
-                removable
-                color="secondary"
-                text-color="white"
-                @remove="selected.removeAtIndex(selected.index)"
-              >
-                {{ selected.opt.label }}
-              </q-chip>
-              <span
-                v-else-if="Array.isArray(values.groups[groupKey]?.linksIds) && selected.index === 3"
-              >
-                +{{ values.groups[groupKey].linksIds.length - 3 }} ще
-              </span>
+            <template #selected="{ opt, index, removeAtIndex }">
+              <LinksChip
+                :opt="opt"
+                :index="index"
+                :removeAtIndex="removeAtIndex"
+                :chips="getChipsLength(groupKey)"
+              />
             </template>
           </SelectField>
         </section>
@@ -90,6 +68,8 @@ import { useHomeStore } from 'src/stores/home'
 import type { CreateTabForm, CreateTabProps } from './types/index.js'
 import { tabFormValidationSchema as validationSchema } from './validation/index.js'
 import { formattedErrors } from '../fields/utils/formattedErrors'
+import LinksOptions from './LinksOptions.vue'
+import LinksChip from './LinksChip.vue'
 
 const openDialog = useDialogsStore()
 const homeStore = useHomeStore()
@@ -103,6 +83,8 @@ const { handleSubmit, errors, values, setFieldValue } = useForm<CreateTabForm>({
 
 const groups = computed(() => Object.keys(values.groups || {}))
 
+const getChipsLength = (groupKey: string) =>
+  Array.isArray(values.groups[groupKey]?.linksIds) ? values.groups[groupKey]?.linksIds.length : 0
 const onChangeIcon = () => console.log('onChangeIcon')
 const onSubmit = handleSubmit((form: CreateTabForm) => console.log(form))
 const onClose = () => void openDialog.closeDialog(dialogName)
@@ -149,10 +131,6 @@ const onDeleteBlock = (id: string) => {
     }
     .fieldSelect {
       width: inherit;
-
-      .itemLabel {
-        margin: 5px;
-      }
     }
   }
 
