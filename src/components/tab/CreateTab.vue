@@ -30,7 +30,42 @@
             :errors="formattedErrors(errors).value"
             beforeIcon="inventory"
             v-bind="fields.groups"
-          />
+          >
+            <template #option="option">
+              <q-item v-bind="option.itemProps">
+                <q-item-section side>
+                  <q-checkbox
+                    :model-value="option.selected"
+                    @update:model-value="option.toggleOption(option.opt)"
+                  />
+                </q-item-section>
+                <q-item-label :class="$style.itemLabel">{{ option.opt.id }}</q-item-label>
+                <q-item-label :class="$style.itemLabel">{{ option.opt.code }}</q-item-label>
+                <q-item-label :class="$style.itemLabel">{{ option.opt.label }}</q-item-label>
+                <q-item-label :class="$style.itemLabel">{{ option.opt.new }}</q-item-label>
+                <q-item-label :class="$style.itemLabel">{{ option.opt.url }}</q-item-label>
+              </q-item>
+            </template>
+
+            <template #selected="selected">
+              <q-chip
+                v-if="selected.index < 3"
+                dense
+                square
+                removable
+                color="secondary"
+                text-color="white"
+                @remove="selected.removeAtIndex(selected.index)"
+              >
+                {{ selected.opt.label }}
+              </q-chip>
+              <span
+                v-else-if="Array.isArray(values.groups[groupKey]?.linksIds) && selected.index === 3"
+              >
+                +{{ values.groups[groupKey].linksIds.length - 3 }} ще
+              </span>
+            </template>
+          </SelectField>
         </section>
       </div>
       <div v-else :class="$style.groups">Створіть блоки із ссилками</div>
@@ -94,6 +129,7 @@ const onDeleteBlock = (id: string) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .fieldInput {
       margin-right: 20px;
       width: 250px;
@@ -113,6 +149,10 @@ const onDeleteBlock = (id: string) => {
     }
     .fieldSelect {
       width: inherit;
+
+      .itemLabel {
+        margin: 5px;
+      }
     }
   }
 

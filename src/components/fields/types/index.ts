@@ -2,6 +2,9 @@ import type { QInputProps, QSelectProps } from 'quasar'
 
 type FieldErrors = Record<string, string | undefined>
 
+type SelectItem = { id: number; label: string }
+type SelectValue = SelectItem | SelectItem[]
+
 type InputFieldProps = {
   name: string
   classes?: string
@@ -23,10 +26,11 @@ type SelectFieldProps = {
   options: QSelectProps['options']
   errors?: FieldErrors
   beforeIcon: string
+  useInput?: QSelectProps['useInput']
   outlined?: QInputProps['outlined']
   multiple?: QSelectProps['multiple']
   useChips?: QSelectProps['useChips']
   dense?: QSelectProps['dense']
 }
 
-export type { InputFieldProps, SelectFieldProps, FieldErrors }
+export type { InputFieldProps, SelectFieldProps, SelectValue, FieldErrors }

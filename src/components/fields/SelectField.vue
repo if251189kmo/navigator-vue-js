@@ -1,6 +1,7 @@
 <template>
   <div :class="classes || $style.field">
     <label :class="[$style.label, !!errors?.[name] ? $style.error : '']">{{ label }}</label>
+
     <q-select
       :dense="dense"
       v-model="selectedValue"
@@ -8,14 +9,22 @@
       :error-message="errors?.[name]"
       :outlined="outlined"
       :options="options"
+      :placeholder="placeholder"
       v-bind="qInputProps"
-      :max-values-visible="3"
-      use-input
+      :use-input="useInput || (Array.isArray(selectedValue) && selectedValue.length === 0)"
       @popup-show="loadOptions"
       :loading="loading"
       :use-chips="useChips"
       :multiple="multiple"
     >
+      <template v-if="$slots.option" v-slot:option="scope">
+        <slot name="option" v-bind="scope" />
+      </template>
+
+      <template v-if="$slots.selected" v-slot:selected-item="scope">
+        <slot name="selected" v-bind="scope" />
+      </template>
+
       <template v-slot:before>
         <q-icon :name="beforeIcon" />
       </template>
@@ -25,7 +34,7 @@
 
 <script setup lang="ts">
 import { useField } from 'vee-validate'
-import type { SelectFieldProps } from './types'
+import type { SelectFieldProps, SelectValue } from './types'
 import { useHomeStore } from 'src/stores/home'
 import { computed, ref, watch } from 'vue'
 
@@ -36,6 +45,8 @@ const {
   errors,
   beforeIcon,
   value,
+  useInput,
+  placeholder,
   outlined = true,
   dense = true,
   options = [],
@@ -43,9 +54,6 @@ const {
   useChips = false,
   ...qInputProps
 } = defineProps<SelectFieldProps>()
-
-type SelectItem = { id: number; label: string }
-type SelectValue = SelectItem | SelectItem[]
 
 const field = useField<SelectValue>(name)
 const homeStore = useHomeStore()
@@ -75,7 +83,7 @@ watch(
 
 <style module lang="scss">
 .field {
-  width: 250px;
+  width: inherit;
 }
 
 .label {

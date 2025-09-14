@@ -10,9 +10,7 @@ const groupSchema = yup.object({
 const tabFormValidationSchema = yup.object({
   label: yup.string().required(label.validation.required),
   groups: yup.lazy((value) =>
-    !Object.keys(value).length
-      ? yup.object()
-      : yup.object(Object.fromEntries(Object.entries(value).map(([k]) => [k, groupSchema]))),
+    yup.object(Object.fromEntries(Object.entries(value || {}).map(([k]) => [k, groupSchema]))),
   ),
 })
 
