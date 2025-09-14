@@ -1,4 +1,7 @@
 {
+  "titles": {
+    "create": "Блок №"
+  },
   "dialogs": {
     "edit": { "title": "Редагування таби №-" },
     "delete": { "title": "Видалення таби №- " },
@@ -12,7 +15,9 @@
     },
     "groups": {
       "label": "Групи посилань",
-      "placeholder": "Виберіть посилання",
+      "placeholder": "Виберіть посилання"
+    },
+    "group.linksIds": {
       "validation": { "required": "Обов'язкове поле" }
     }
   },

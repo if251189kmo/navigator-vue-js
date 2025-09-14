@@ -51,6 +51,13 @@ body {
   }
 }
 
+// SelectField
+.q-field__inner {
+  .q-field__bottom {
+    padding: 2px 2px 2px 4px;
+  }
+}
+
 // Dialog
 .q-dialog__inner--minimized > div {
   max-width: inherit;

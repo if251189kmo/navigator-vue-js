@@ -15,10 +15,10 @@
     "postinstall": "quasar prepare"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.4",
+    "@quasar/extras": "^1.17.0",
     "axios": "^1.2.1",
     "pinia": "^3.0.1",
-    "quasar": "^2.16.0",
+    "quasar": "^2.18.2",
     "vee-validate": "^4.15.1",
     "vue": "^3.4.18",
     "vue-router": "^4.0.12",

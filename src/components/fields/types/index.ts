@@ -1,11 +1,13 @@
 import type { QInputProps, QSelectProps } from 'quasar'
 
+type FieldErrors = Record<string, string | undefined>
+
 type InputFieldProps = {
   name: string
   classes?: string
   placeholder?: string
   label: QInputProps['label']
-  errors?: Record<string, string | undefined>
+  errors?: FieldErrors
   beforeIcon: string
   type?: QInputProps['type']
   outlined?: QInputProps['outlined']
@@ -19,7 +21,7 @@ type SelectFieldProps = {
   value?: { id: number; label: string }[]
   label: QSelectProps['label']
   options: QSelectProps['options']
-  errors?: Record<string, string | undefined>
+  errors?: FieldErrors
   beforeIcon: string
   outlined?: QInputProps['outlined']
   multiple?: QSelectProps['multiple']
@@ -27,4 +29,4 @@ type SelectFieldProps = {
   dense?: QSelectProps['dense']
 }
 
-export type { InputFieldProps, SelectFieldProps }
+export type { InputFieldProps, SelectFieldProps, FieldErrors }

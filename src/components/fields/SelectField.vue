@@ -9,6 +9,7 @@
       :outlined="outlined"
       :options="options"
       v-bind="qInputProps"
+      :max-values-visible="3"
       use-input
       @popup-show="loadOptions"
       :loading="loading"
