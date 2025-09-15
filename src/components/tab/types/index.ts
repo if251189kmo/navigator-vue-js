@@ -1,33 +1,34 @@
 import type { DialogProps } from 'src/components/dialog/types'
+import type { LinkUi } from 'src/models'
 import type { TabUi } from 'src/models/tab'
 
-type TabProps = {
-  tab: TabUi
-}
+type TabProps = { tab: TabUi }
+type TabLinks = TabUi['groups'][number]['links']
 
 type LinksChipSlot = {
-  opt: TabUi['groups'][number]['links'][number]
+  opt: TabLinks[number]
   removeAtIndex: (index: number) => void
   index: number
   chips: number
 }
 
 type LinksOptionsSlot = {
-  opt: Record<string, TabUi['groups'][number]['links']>
+  opt: Record<string, TabLinks>
   selected: boolean
-  toggleOption: (opt: Record<string, TabUi['groups'][number]['links']>) => void
-  itemProps: Record<string, unknown>
+  toggleOption: (opt: Record<string, TabLinks>) => void
+  itemProps: Record<string, TabLinks>
 }
 
 type CreateTabForm = {
-  label: string
-  groups: {
-    [key: string]: {
-      id: number
-      name: string
-      linksIds: Record<string, TabUi['groups'][number]['links']>
+  order: TabUi['order']
+  iconUrl: TabUi['iconUrl']
+  label: TabUi['label']
+  groups: Record<
+    string,
+    Omit<TabUi['groups'][number], 'linksIds' | 'links'> & {
+      linksIds: LinkUi[]
     }
-  }
+  >
 }
 
 type RenderTabProps = TabProps

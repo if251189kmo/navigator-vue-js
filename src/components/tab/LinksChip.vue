@@ -18,9 +18,3 @@ import type { LinksChipSlot } from './types'
 
 const { index, chips, opt } = defineProps<LinksChipSlot>()
 </script>
-
-<!-- <style module lang="scss">
-.itemLabel {
-  margin: 5px;
-}
-</style> -->

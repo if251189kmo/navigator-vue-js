@@ -70,6 +70,7 @@ import { tabFormValidationSchema as validationSchema } from './validation/index.
 import { formattedErrors } from '../fields/utils/formattedErrors'
 import LinksOptions from './LinksOptions.vue'
 import LinksChip from './LinksChip.vue'
+import { createTab } from 'src/services/tabsService'
 
 const openDialog = useDialogsStore()
 const homeStore = useHomeStore()
@@ -78,7 +79,7 @@ const { dialogName } = defineProps<CreateTabProps>()
 
 const { handleSubmit, errors, values, setFieldValue } = useForm<CreateTabForm>({
   validationSchema,
-  initialValues: { label: '', groups: {} },
+  initialValues: { iconUrl: 'iconUrl', order: 0, label: '', groups: {} },
 })
 
 const groups = computed(() => Object.keys(values.groups || {}))
@@ -86,13 +87,19 @@ const groups = computed(() => Object.keys(values.groups || {}))
 const getChipsLength = (groupKey: string) =>
   Array.isArray(values.groups[groupKey]?.linksIds) ? values.groups[groupKey]?.linksIds.length : 0
 const onChangeIcon = () => console.log('onChangeIcon')
-const onSubmit = handleSubmit((form: CreateTabForm) => console.log(form))
 const onClose = () => void openDialog.closeDialog(dialogName)
+
+const onSubmit = handleSubmit((form: CreateTabForm) => {
+  void createTab(form)
+})
 
 const onCreateBlock = () => {
   const oldGroups = groups.value
   const id = oldGroups.length ? Math.max(...oldGroups.map(Number)) + 1 : 1
-  const newGroups = { ...values.groups, [id]: { id, name: `${titles.create}${id}`, linksIds: [] } }
+  const newGroups = {
+    ...values.groups,
+    [id]: { id, name: `${titles.create}${id}`, linksIds: [] },
+  }
 
   setFieldValue('groups', newGroups)
 }

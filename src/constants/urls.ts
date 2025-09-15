@@ -4,6 +4,8 @@ const urls = {
   },
   tabs: {
     get: '/navigator/tabs',
+    post: '/navigator/tabs',
+    delete: (id: number) => `/navigator/tabs/${id}`,
   },
   links: {
     get: '/navigator/links',
