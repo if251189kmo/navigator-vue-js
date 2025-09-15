@@ -23,8 +23,10 @@
     }
   },
   "buttons": {
-    "save": { "label": "Створити нову табу" },
-    "cancel": { "label": "Відмінити створення" },
+    "edit": { "label": "Змінити табу" },
+    "cancelEdit": { "label": "Відмінити редагування" },
+    "create": { "label": "Створити нову табу" },
+    "cancelCreate": { "label": "Відмінити створення" },
     "createBlock": { "label": "Добавити блок" },
     "changeIcon": { "label": "Додати іконку" },
     "delete": { "label": "Так, видалити" },

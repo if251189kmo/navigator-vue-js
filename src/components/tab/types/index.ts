@@ -34,8 +34,8 @@ type EditTabForm = {
 }
 
 type RenderTabProps = TabProps
-type EditTabProps = TabProps['tab']
-type DeleteTabProps = TabProps['tab']
+type EditTabProps = { tab: TabProps['tab']; dialogName: DialogProps['name'] }
+type DeleteTabProps = { id: TabProps['tab']['id']; dialogName: DialogProps['name'] }
 type CreateTabProps = { dialogName: DialogProps['name'] }
 
 export type {
@@ -47,4 +47,5 @@ export type {
   EditTabForm,
   LinksChipSlot,
   LinksOptionsSlot,
+  TabLinks,
 }

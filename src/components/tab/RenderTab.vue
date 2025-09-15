@@ -57,10 +57,10 @@
   </q-card>
 
   <MyDialog v-bind="editDialog">
-    <template #content><EditTab v-bind="tab" /></template>
+    <template #content><EditTab :dialogName="editDialog.name" :tab="tab" /></template>
   </MyDialog>
   <MyDialog v-bind="deleteDialog">
-    <template #content><DeleteTab v-bind="tab" /></template>
+    <template #content><DeleteTab :dialogName="deleteDialog.name" :id="tab.id" /></template>
   </MyDialog>
   <MyDialog v-bind="createDialog">
     <template #content><CreateTab :dialogName="createDialog.name" /></template>

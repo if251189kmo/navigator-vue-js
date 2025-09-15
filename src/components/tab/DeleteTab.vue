@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.buttons">
-    <q-btn flat color="primary" icon="cancel" v-bind="buttons.cancelDelete" />
+    <q-btn flat color="primary" @click="onClose" icon="cancel" v-bind="buttons.cancelDelete" />
     <q-btn flat color="negative" @click="onDelete" v-bind="buttons.delete" icon="delete" />
   </div>
 </template>
@@ -9,12 +9,16 @@
 import { deleteTab } from 'src/services/tabsService.js'
 import type { DeleteTabProps } from './types/index.js'
 import { buttons } from './json/index.json'
+import { useDialogsStore } from 'src/stores/dialog.js'
+
+const openDialog = useDialogsStore()
+const { id, dialogName } = defineProps<DeleteTabProps>()
+
+const onClose = () => void openDialog.closeDialog(dialogName)
 
 const onDelete = () => {
-  void deleteTab(tab.id)
+  void deleteTab(id)
 }
-
-const tab = defineProps<DeleteTabProps>()
 </script>
 
 <style module lang="scss">

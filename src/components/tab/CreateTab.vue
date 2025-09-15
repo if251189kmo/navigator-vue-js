@@ -51,8 +51,8 @@
       </div>
 
       <section :class="$style.buttons">
-        <q-btn type="submit" flat color="positive" v-bind="buttons.save" />
-        <q-btn color="negative" flat @click="onClose" v-bind="buttons.cancel" />
+        <q-btn type="submit" flat color="positive" v-bind="buttons.create" />
+        <q-btn color="negative" flat @click="onClose" v-bind="buttons.cancelCreate" />
       </section>
     </q-form>
   </div>

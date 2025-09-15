@@ -1,5 +1,5 @@
 import { api } from 'boot/axios'
-import type { CreateTabForm } from 'src/components/tab/types'
+import type { CreateTabForm, EditTabForm } from 'src/components/tab/types'
 import LocalStorage from 'src/constants/localStorage'
 import urls from 'src/constants/urls'
 import type { LinkServer, TabServer } from 'src/models'
@@ -55,6 +55,33 @@ const createTab = async ({ groups, ...rest }: CreateTabForm) => {
   }
 }
 
+const editTab = async ({ groups, id, ...rest }: EditTabForm) => {
+  const progressStore = useProgressStore()
+  const homeStore = useHomeStore()
+  const dialogsStore = useDialogsStore()
+
+  const token = localStorage.getItem(AUTH_USER)
+  const headers = token ? { Authorization: `Bearer ${token}` } : {}
+  const newForm = {
+    ...rest,
+    groups: Object.values(groups).map(({ links, ...other }) => ({
+      ...other,
+      linksIds: links.map((link) => link.id),
+    })),
+  }
+
+  try {
+    await api.put(urls.tabs.put(id), newForm, { headers })
+
+    await homeStore.fetchTabs()
+    dialogsStore.closeAllDialogs()
+  } catch (err) {
+    console.error(err)
+  } finally {
+    progressStore.closeProgress('page-progress')
+  }
+}
+
 const deleteTab = async (id: number) => {
   const progressStore = useProgressStore()
   const homeStore = useHomeStore()
@@ -87,4 +114,4 @@ const getLinks = async () => {
   }
 }
 
-export { getTabs, createTab, deleteTab, getLinks }
+export { getTabs, editTab, createTab, deleteTab, getLinks }
