@@ -1,10 +1,11 @@
 {
   "titles": {
-    "create": "Блок №"
+    "create": "Блок №",
+    "noGroups": "Добавте ваші блоки із ссилками"
   },
   "dialogs": {
     "edit": { "title": "Редагування таби №-" },
-    "delete": { "title": "Видалення таби №- " },
+    "delete": { "title": "Ви впевнені, що хочете видалити табу №" },
     "create": { "title": "Створення нової таби" }
   },
   "fields": {
@@ -17,15 +18,16 @@
       "label": "Групи посилань",
       "placeholder": "Виберіть посилання"
     },
-    "group.linksIds": {
+    "group.links": {
       "validation": { "required": "Обов'язкове поле" }
     }
   },
   "buttons": {
-    "save": { "label": "Зберегти" },
-    "cancel": { "label": "Відмінити" },
-    "deleteBlock": { "label": "Видалити блок" },
-    "createBlock": { "label": "Добавити блок із ссилками" },
-    "changeIcon": { "label": "Змінити іконку" }
+    "save": { "label": "Створити нову табу" },
+    "cancel": { "label": "Відмінити створення" },
+    "createBlock": { "label": "Добавити блок" },
+    "changeIcon": { "label": "Додати іконку" },
+    "delete": { "label": "Так, видалити" },
+    "cancelDelete": { "label": "Відмінити видалення" }
   }
 }

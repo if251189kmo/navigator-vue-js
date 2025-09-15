@@ -2,7 +2,8 @@
   <q-card :class="$style.tab" dark bordered>
     <q-card-section :class="$style.title">
       <div :class="$style.label">
-        <div :class="$style.icon"><img src="{{tab.iconUrl}}" /></div>
+        <div :class="$style.icon" v-if="tab.iconUrl !== ''"><img src="{{tab.iconUrl}}" /></div>
+        <q-icon :class="$style.icon" v-else name="dvr" color="teal" size="3em" />
         <div :class="$style.text">{{ tab.label }}</div>
       </div>
 
@@ -50,7 +51,7 @@
       </q-btn-dropdown>
     </q-card-section>
     <q-separator dark inset />
-    <q-card-section>
+    <q-card-section :class="$style.links">
       <RenderLink v-for="group in tab.groups" :key="group.id" :group="group" />
     </q-card-section>
   </q-card>
@@ -104,16 +105,19 @@ const createDialog = {
 <style module lang="scss">
 .tab {
   margin: 10px;
+
   width: 45%;
-  background-color: rgba(127, 255, 212, 0.151);
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.315);
+  background-color: rgba(255, 255, 255, 0.431);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.479);
 
   .title {
+    padding: 16px 16px 8px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     .label {
+      margin: 0 20px;
       display: flex;
 
       .icon {
@@ -121,13 +125,21 @@ const createDialog = {
       }
 
       .text {
+        padding: 0 0 5px 0;
+        display: flex;
+        align-items: end;
         color: black;
       }
     }
 
     .actions {
       display: flex;
+      justify-content: flex-start;
     }
+  }
+
+  .links {
+    padding: 8px 16px 16px 16px;
   }
 }
 </style>

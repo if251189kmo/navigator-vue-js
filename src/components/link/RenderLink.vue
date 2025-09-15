@@ -2,8 +2,9 @@
   <q-card :class="$style.renderLinks" bordered>
     <ul :class="$style.group">
       <li :class="$style.link" v-for="link in group.links" :key="link.id">
+        <span>&bull; </span>
         <span :class="$style.new" v-if="link.new"> New </span>
-        <a :href="link.url"> &bull; {{ link.label }}</a>
+        <a :href="link.url"> {{ link.label }}</a>
       </li>
     </ul>
   </q-card>
@@ -27,6 +28,8 @@ const { group } = defineProps<RenderLinksProps>()
     flex-wrap: wrap;
 
     .link {
+      box-sizing: border-box;
+      padding: 0 4px;
       color: $primary;
 
       .new {

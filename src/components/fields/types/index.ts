@@ -28,7 +28,7 @@ type SelectFieldProps = {
   label: QSelectProps['label']
   options: QSelectProps['options']
   errors?: FieldErrors
-  beforeIcon: string
+  beforeIcon?: string
   useInput?: QSelectProps['useInput']
   outlined?: QInputProps['outlined']
   multiple?: QSelectProps['multiple']

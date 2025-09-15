@@ -21,9 +21,8 @@ void homeStore.fetchTabs()
   flex-wrap: wrap;
   justify-content: space-around;
 
-  background-color: rgba(255, 255, 255, 0.699);
+  background-color: rgba(255, 255, 255, 0.841);
   border-radius: 4px 4px 50px 50px;
   padding: 20px;
 }
 </style>
-// TODO: почитати за життя компонента на Vue

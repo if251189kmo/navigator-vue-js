@@ -1,6 +1,12 @@
 <template>
   <div :class="classes || $style.field">
-    <label :class="[$style.label, !!errors?.[name] ? $style.error : '']">{{ label }}</label>
+    <label
+      :class="[
+        !!beforeIcon ? $style.label : $style.labelBeforeIcon,
+        !!errors?.[name] ? $style.error : '',
+      ]"
+      >{{ label }}</label
+    >
 
     <q-select
       :dense="dense"
@@ -51,7 +57,7 @@
         <slot name="selected" v-bind="scope" />
       </template>
 
-      <template v-slot:before>
+      <template v-if="beforeIcon" v-slot:before>
         <q-icon :name="beforeIcon" />
       </template>
     </q-select>
@@ -131,6 +137,11 @@ watch(
 <style module lang="scss">
 .field {
   width: inherit;
+}
+
+.labelBeforeIcon {
+  margin: 4px;
+  font-weight: 500;
 }
 
 .label {

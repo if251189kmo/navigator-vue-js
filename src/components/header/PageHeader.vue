@@ -52,7 +52,7 @@ const loginDialog = {
   margin: 50px 0 20px 0;
   padding: 20px 50px;
   border-radius: 50px 50px 4px 4px;
-  background-color: rgba(255, 255, 255, 0.699);
+  background-color: rgba(255, 255, 255, 0.841);
 
   .title {
     font-size: 25px;

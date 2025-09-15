@@ -1,34 +1,36 @@
 import type { DialogProps } from 'src/components/dialog/types'
-import type { LinkUi } from 'src/models'
 import type { TabUi } from 'src/models/tab'
 
 type TabProps = { tab: TabUi }
-type TabLinks = TabUi['groups'][number]['links']
+type TabLinks = Record<string, TabUi['groups'][number]['links']>
 
 type LinksChipSlot = {
-  opt: TabLinks[number]
-  removeAtIndex: (index: number) => void
+  opt: TabLinks
   index: number
   chips: number
+  removeAtIndex: (index: LinksChipSlot['index']) => void
 }
 
 type LinksOptionsSlot = {
-  opt: Record<string, TabLinks>
+  opt: TabLinks
   selected: boolean
-  toggleOption: (opt: Record<string, TabLinks>) => void
-  itemProps: Record<string, TabLinks>
+  toggleOption: (opt: LinksOptionsSlot['opt']) => void
+  itemProps: TabLinks
 }
 
 type CreateTabForm = {
   order: TabUi['order']
   iconUrl: TabUi['iconUrl']
   label: TabUi['label']
-  groups: Record<
-    string,
-    Omit<TabUi['groups'][number], 'linksIds' | 'links'> & {
-      linksIds: LinkUi[]
-    }
-  >
+  groups: Record<string, TabUi['groups'][number]>
+}
+
+type EditTabForm = {
+  id: TabUi['id']
+  order: TabUi['order']
+  iconUrl: TabUi['iconUrl']
+  label: TabUi['label']
+  groups: Record<string, TabUi['groups'][number]>
 }
 
 type RenderTabProps = TabProps
@@ -42,6 +44,7 @@ export type {
   DeleteTabProps,
   CreateTabProps,
   CreateTabForm,
+  EditTabForm,
   LinksChipSlot,
   LinksOptionsSlot,
 }

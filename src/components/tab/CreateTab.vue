@@ -9,9 +9,9 @@
           beforeIcon="inventory"
           :errors="errors"
         />
-        <div>
-          <q-btn color="warning" @click="onChangeIcon" v-bind="buttons.changeIcon" />
-          <q-btn color="primary" @click="onCreateBlock" v-bind="buttons.createBlock" />
+        <div :class="$style.tabNameButtons">
+          <q-btn color="warning" flat @click="onChangeIcon" v-bind="buttons.changeIcon" />
+          <q-btn color="primary" flat @click="onCreateBlock" v-bind="buttons.createBlock" />
         </div>
       </section>
 
@@ -19,16 +19,15 @@
         <section v-for="groupKey in groups" :key="groupKey" :class="$style.groups">
           <div :class="$style.groupTitle">
             <div>{{ values.groups[groupKey]?.name }}</div>
-            <q-btn color="negative" @click="onDeleteBlock(groupKey)" v-bind="buttons.deleteBlock" />
+            <q-btn color="negative" @click="onDeleteBlock(groupKey)" round flat icon="delete" />
           </div>
           <SelectField
-            :name="`groups.${groupKey}.linksIds`"
+            :name="`groups.${groupKey}.links`"
             :classes="$style.fieldSelect"
             multiple
             useChips
             :options="getLinks"
             :errors="formattedErrors(errors).value"
-            beforeIcon="inventory"
             v-bind="fields.groups"
           >
             <template #option="option">
@@ -46,11 +45,14 @@
           </SelectField>
         </section>
       </div>
-      <div v-else :class="$style.groups">Створіть блоки із ссилками</div>
+      <div v-else :class="$style.noGroups">
+        <q-icon name="dvr" color="teal" size="4em" />
+        <div>{{ titles.noGroups }}</div>
+      </div>
 
       <section :class="$style.buttons">
-        <q-btn type="submit" color="positive" v-bind="buttons.save" />
-        <q-btn color="negative" @click="onClose" v-bind="buttons.cancel" />
+        <q-btn type="submit" flat color="positive" v-bind="buttons.save" />
+        <q-btn color="negative" flat @click="onClose" v-bind="buttons.cancel" />
       </section>
     </q-form>
   </div>
@@ -79,13 +81,18 @@ const { dialogName } = defineProps<CreateTabProps>()
 
 const { handleSubmit, errors, values, setFieldValue } = useForm<CreateTabForm>({
   validationSchema,
-  initialValues: { iconUrl: 'iconUrl', order: 0, label: '', groups: {} },
+  initialValues: {
+    label: '',
+    groups: {},
+    iconUrl: '',
+    order: 0,
+  },
 })
 
 const groups = computed(() => Object.keys(values.groups || {}))
 
 const getChipsLength = (groupKey: string) =>
-  Array.isArray(values.groups[groupKey]?.linksIds) ? values.groups[groupKey]?.linksIds.length : 0
+  Array.isArray(values.groups[groupKey]?.links) ? values.groups[groupKey]?.links.length : 0
 const onChangeIcon = () => console.log('onChangeIcon')
 const onClose = () => void openDialog.closeDialog(dialogName)
 
@@ -98,7 +105,7 @@ const onCreateBlock = () => {
   const id = oldGroups.length ? Math.max(...oldGroups.map(Number)) + 1 : 1
   const newGroups = {
     ...values.groups,
-    [id]: { id, name: `${titles.create}${id}`, linksIds: [] },
+    [id]: { id, name: `${titles.create}${id}`, links: [] },
   }
 
   setFieldValue('groups', newGroups)
@@ -114,10 +121,18 @@ const onDeleteBlock = (id: string) => {
 
 <style module lang="scss">
 .createTab {
+  min-width: 700px;
+
   .form > .tabName {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .tabNameButtons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
 
     .fieldInput {
       margin-right: 20px;
@@ -126,19 +141,26 @@ const onDeleteBlock = (id: string) => {
   }
 
   .form .groups {
-    background-color: rgba(81, 255, 0, 0.192);
-    border: 1px solid brown;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.356);
+    border-radius: 4px;
     margin-bottom: 10px;
-    padding: 5px;
+    padding: 20px;
 
     .groupTitle {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin: 0 4px;
     }
     .fieldSelect {
       width: inherit;
     }
+  }
+
+  .form .noGroups {
+    padding: 43px 0;
+    color: rgba(0, 0, 0, 0.696);
+    text-align: center;
   }
 
   .form > .buttons {

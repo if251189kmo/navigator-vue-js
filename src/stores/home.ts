@@ -13,7 +13,7 @@ export const useHomeStore = defineStore('home', {
   state: (): HomeStore => ({
     home: {
       tabs: [],
-      links: []
+      links: [],
     },
   }),
   actions: {
@@ -31,16 +31,16 @@ export const useHomeStore = defineStore('home', {
   },
   getters: {
     getTabs: (state) => {
-      return state.home.tabs.map(tab => ({
+      return state.home.tabs.map((tab) => ({
         ...tab,
-        groups: tab.groups.map(group => ({
-          ...group,
-          links: state.home.links.filter(l => group.linksIds.includes(l.id))
-        }))
+        groups: tab.groups.map(({ linksIds, ...rest }) => ({
+          ...rest,
+          links: state.home.links.filter((l) => linksIds.includes(l.id)),
+        })),
       }))
     },
-    getLinks: (state) => state.home.links
-  }
+    getLinks: (state) => state.home.links,
+  },
 })
 
 export type { HomeStore }

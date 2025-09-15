@@ -12,8 +12,16 @@ type TabServer = {
   }[]
 }
 
-type TabUi = Omit<TabServer, 'groups'> & {
-  groups: (TabServer['groups'][number] & { links: LinkUi[] })[]
+type TabUi = {
+  id: TabServer['id']
+  label: TabServer['label']
+  iconUrl: TabServer['iconUrl']
+  order: TabServer['order']
+  groups: {
+    id: TabServer['groups'][number]['id']
+    name: TabServer['groups'][number]['name']
+    links: LinkUi[]
+  }[]
 }
 
 export type { TabServer, TabUi }
