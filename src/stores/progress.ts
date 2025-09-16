@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
+import type Progresses from 'src/constants/progresses'
 
 type ProgressesStore = {
-  progresses: Record<string, { run: boolean }>
+  progresses: { [Key in Progresses]?: { run: boolean } }
 }
 
 export const useProgressStore = defineStore('progresses', {
@@ -9,10 +10,10 @@ export const useProgressStore = defineStore('progresses', {
     progresses: {},
   }),
   actions: {
-    openProgress(name: string) {
+    openProgress(name: Progresses) {
       this.progresses[name] = { run: true }
     },
-    closeProgress(name: string) {
+    closeProgress(name: Progresses) {
       delete this.progresses[name]
     },
     closeAllProgresses() {

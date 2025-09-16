@@ -60,7 +60,6 @@
 
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { fields, buttons, titles } from './json/index.json'
 import InputField from '../fields/InputField.vue'
@@ -70,9 +69,10 @@ import { useHomeStore } from 'src/stores/home'
 import type { CreateTabForm, CreateTabProps } from './types/index.js'
 import { tabFormValidationSchema as validationSchema } from './validation/index.js'
 import { formattedErrors } from '../fields/utils/formattedErrors'
-import LinksOptions from './LinksOptions.vue'
-import LinksChip from './LinksChip.vue'
+import LinksOptions from './shared/LinksOptions.vue'
+import LinksChip from './shared/LinksChip.vue'
 import { createTab } from 'src/services/tabsService'
+import { useGroupsForm } from './composition/useGroupsForm'
 
 const openDialog = useDialogsStore()
 const homeStore = useHomeStore()
@@ -89,34 +89,17 @@ const { handleSubmit, errors, values, setFieldValue } = useForm<CreateTabForm>({
   },
 })
 
-const groups = computed(() => Object.keys(values.groups || {}))
+const { groups, getChipsLength, onCreateBlock, onDeleteBlock } = useGroupsForm({
+  values,
+  setFieldValue,
+})
 
-const getChipsLength = (groupKey: string) =>
-  Array.isArray(values.groups[groupKey]?.links) ? values.groups[groupKey]?.links.length : 0
 const onChangeIcon = () => console.log('onChangeIcon')
 const onClose = () => void openDialog.closeDialog(dialogName)
 
 const onSubmit = handleSubmit((form: CreateTabForm) => {
   void createTab(form)
 })
-
-const onCreateBlock = () => {
-  const oldGroups = groups.value
-  const id = oldGroups.length ? Math.max(...oldGroups.map(Number)) + 1 : 1
-  const newGroups = {
-    ...values.groups,
-    [id]: { id, name: `${titles.create}${id}`, links: [] },
-  }
-
-  setFieldValue('groups', newGroups)
-}
-
-const onDeleteBlock = (id: string) => {
-  const oldGroups = { ...values.groups }
-  delete oldGroups[id]
-
-  setFieldValue('groups', oldGroups)
-}
 </script>
 
 <style module lang="scss">

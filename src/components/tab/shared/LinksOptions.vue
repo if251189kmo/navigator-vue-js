@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import type { LinksOptionsSlot } from './types'
+import type { LinksOptionsSlot } from '../types'
 
 const { selected, opt, itemProps } = defineProps<LinksOptionsSlot>()
 </script>

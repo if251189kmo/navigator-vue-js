@@ -9,9 +9,6 @@ enum Dialogs {
   // Link
   EDIT_LINK = 'edit_link_',
   DELETE_LINK = 'delete_link_',
-
-  // Progress
-  PROGRESS_PAGE = 'progress_page',
 }
 
 export default Dialogs

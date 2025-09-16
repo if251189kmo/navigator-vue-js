@@ -1,5 +1,5 @@
 <template>
-  <MyProgress :name="pageProgressName">
+  <MyProgress :name="Progresses.PROGRESS_PAGE">
     <q-layout :class="$style.pageWrapper">
       <div :class="$style.container">
         <PageHeader />
@@ -13,10 +13,9 @@
 </template>
 
 <script setup lang="ts">
+import Progresses from 'src/constants/progresses'
 import PageHeader from '../../components/header/PageHeader.vue'
 import MyProgress from '../progress/MyProgress.vue'
-
-const pageProgressName = 'page-progress'
 </script>
 
 <style module lang="scss">

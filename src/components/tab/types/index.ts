@@ -25,6 +25,8 @@ type CreateTabForm = {
   groups: Record<string, TabUi['groups'][number]>
 }
 
+type DeleteTabForm = TabUi['id']
+
 type EditTabForm = {
   id: TabUi['id']
   order: TabUi['order']
@@ -45,6 +47,7 @@ export type {
   CreateTabProps,
   CreateTabForm,
   EditTabForm,
+  DeleteTabForm,
   LinksChipSlot,
   LinksOptionsSlot,
   TabLinks,

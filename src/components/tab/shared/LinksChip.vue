@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { LinksChipSlot } from './types'
+import type { LinksChipSlot } from '../types'
 
 const { index, chips, opt } = defineProps<LinksChipSlot>()
 </script>

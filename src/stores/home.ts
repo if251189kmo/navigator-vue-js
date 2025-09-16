@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import type { FetchOptions } from 'src/boot/axios'
 import type { LinkServer, TabServer } from 'src/models'
 import { getLinks, getTabs } from 'src/services/tabsService'
 
@@ -17,16 +18,16 @@ export const useHomeStore = defineStore('home', {
     },
   }),
   actions: {
-    async fetchTabs() {
-      const data = await getTabs()
+    async fetchTabs(params?: FetchOptions) {
+      const data = await getTabs(params)
 
-      this.home.tabs = data?.tabs || []
-      this.home.links = data?.links || []
+      this.home.tabs = data?.tabs
+      this.home.links = data?.links
     },
     async fetchLinks() {
       const links = await getLinks()
 
-      this.home.links = links || []
+      this.home.links = links
     },
   },
   getters: {
