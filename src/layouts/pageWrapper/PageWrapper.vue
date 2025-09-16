@@ -26,7 +26,7 @@ import MyBanner from '../banner/MyBanner.vue'
   display: flex;
   justify-content: center;
 
-  background-image: url(../../assets//page-background.jpg);
+  background-image: url(../../assets//bg-1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 

@@ -108,7 +108,7 @@ const createDialog = {
 
   width: 45%;
   background-color: rgba(255, 255, 255, 0.431);
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.479);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.179);
 
   .title {
     padding: 16px 16px 8px 16px;
