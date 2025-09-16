@@ -1,18 +1,20 @@
 <template>
-  <div :class="$style.header">
-    <h1 :class="$style.title">{{ labels.title }}</h1>
-    <div :class="$style.logoBox">
-      <div :class="$style.logo"><img src="./../../assets/logo.png" /></div>
-      <div :class="$style.buttons">
-        <q-btn v-if="getAuth" padding="sm" color="negative" @click="logout" icon="logout" />
-        <q-btn v-else padding="sm" color="primary" @click="openLoginModal" icon="login" />
+  <q-intersection transition="scale">
+    <div :class="$style.header">
+      <h1 :class="$style.title">{{ labels.title }}</h1>
+      <div :class="$style.logoBox">
+        <div :class="$style.logo"><img src="./../../assets/logo.png" /></div>
+        <div :class="$style.buttons">
+          <q-btn v-if="getAuth" round color="negative" @click="logout" icon="logout" />
+          <q-btn v-else round color="primary" @click="openLoginModal" icon="login" />
+        </div>
       </div>
     </div>
-  </div>
 
-  <MyDialog v-bind="loginDialog">
-    <template #content><LoginPage /></template>
-  </MyDialog>
+    <MyDialog v-bind="loginDialog">
+      <template #content><LoginPage /></template>
+    </MyDialog>
+  </q-intersection>
 </template>
 
 <script setup lang="ts">

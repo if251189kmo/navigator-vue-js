@@ -13,7 +13,7 @@ type LoginStore = {
 // TODO: допрацювати
 export const useLoginStore = defineStore('login', {
   state: (): LoginStore => ({
-    token: localStorage.getItem(AUTH_USER) ?? null,
+    token: localStorage.getItem(AUTH_USER),
     isAuth: !!localStorage.getItem(AUTH_USER),
   }),
   actions: {

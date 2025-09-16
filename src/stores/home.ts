@@ -21,8 +21,8 @@ export const useHomeStore = defineStore('home', {
     async fetchTabs(params?: FetchOptions) {
       const data = await getTabs(params)
 
-      this.home.tabs = data?.tabs
-      this.home.links = data?.links
+      this.home.tabs = data.tabs
+      this.home.links = data.links
     },
     async fetchLinks() {
       const links = await getLinks()
