@@ -1,7 +1,10 @@
 import { defineBoot } from '#q-app/wrappers'
+import type { AxiosError } from 'axios'
 import axios, { type AxiosInstance } from 'axios'
 import LocalStorage from 'src/constants/localStorage'
 import Progresses from 'src/constants/progresses'
+import type { ResponseError } from 'src/stores/banner'
+import { useBannerStore } from 'src/stores/banner'
 import { useProgressStore } from 'src/stores/progress'
 
 const { AUTH_USER } = LocalStorage
@@ -37,6 +40,7 @@ api.interceptors.request.use(
 
 async function fetchWrapper<T>(promise: Promise<T>, options: FetchOptions = {}) {
   const progressStore = useProgressStore()
+  const bannerStore = useBannerStore()
   const { progressName = PROGRESS_PAGE } = options
 
   if (progressName !== NO_PROGRESS) progressStore.openProgress(progressName)
@@ -44,8 +48,8 @@ async function fetchWrapper<T>(promise: Promise<T>, options: FetchOptions = {}) 
   try {
     const response = await promise
     return response
-  } catch (err) {
-    console.error('Request failed:', err)
+  } catch (err: unknown) {
+    bannerStore.setBanners(err as AxiosError<ResponseError>)
     throw err
   } finally {
     if (progressName !== NO_PROGRESS) progressStore.closeProgress(progressName)

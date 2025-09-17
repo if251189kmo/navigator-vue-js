@@ -1,8 +1,16 @@
 <template>
   <div :class="$style.myBanner">
     <div :class="$style.box">
-      <q-banner :class="$style.banner" dense inline-actions class="text-white bg-red">
-        This app is offline.
+      <q-banner
+        :class="$style.banner"
+        v-for="(error, i) in getBannerErrors"
+        :key="i"
+        dense
+        inline-actions
+        class="text-white bg-red"
+      >
+        {{ error.type }} This app is offline.
+        {{ error.statusType }}
         <template v-slot:action>
           <q-btn flat color="white" label="Turn ON Wifi" />
         </template>
@@ -13,14 +21,15 @@
 </template>
 
 <script setup lang="ts">
-// import { useProgressStore } from 'src/stores/progress'
-// import { computed } from 'vue'
-// import type { ProgressProps } from './types'
+import { storeToRefs } from 'pinia'
+import { useBannerStore } from 'src/stores/banner'
+import { watch } from 'vue'
 
-// const { name } = defineProps<ProgressProps>()
-// const store = useProgressStore()
-
-// const show = computed(() => store.progresses[name]?.run)
+const bannerStore = useBannerStore()
+const { getBannerErrors } = storeToRefs(bannerStore)
+watch(getBannerErrors, (newVal) => {
+  console.log('Banner errors changed:', newVal)
+})
 </script>
 <style module lang="scss">
 .myBanner {
