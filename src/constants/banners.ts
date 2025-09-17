@@ -1,7 +1,3 @@
-enum Statuses {
-  UNAUTHORIZED = 'UNAUTHORIZED',
-}
-
 enum Bannerss {
   ERROR = 'ERROR',
   INFO = 'INFO',
@@ -9,4 +5,4 @@ enum Bannerss {
   SUCCESS = 'SUCCESS',
 }
 
-export { Statuses, Bannerss }
+export { Bannerss }

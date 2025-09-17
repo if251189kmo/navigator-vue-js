@@ -1,28 +1,47 @@
 import type { AxiosError } from 'axios'
 import { defineStore } from 'pinia'
-import { Bannerss, type Statuses } from 'src/constants/banners'
+import { Bannerss } from 'src/constants/banners'
+import { ServerStatuses } from 'src/constants/serverStatuses'
+import { singeltonBanner } from 'src/layouts/banner/utils'
 import type { ArrayBannerServer, BannerUi, SingeltonBannerServer } from 'src/models/banner'
 
-const { ERROR } = Bannerss
+const { ERROR, WARNING, SUCCESS, INFO } = Bannerss
+const { UNAUTHORIZED, BAD_REQUEST, SUCCES } = ServerStatuses
 
-type ResponseError = ArrayBannerServer[] | Statuses
+type ResponseError = ArrayBannerServer[] | ServerStatuses
 type BannerStore = {
   banners: { singelton: SingeltonBannerServer; array: ArrayBannerServer[] }
   errors: BannerUi[]
 }
 
-// UNAUTHORIZED
-// [
-//     {
-//         "instancePath": "",
-//         "message": "must have required property 'label'"
-//     }
-// ]
-
 export const useBannerStore = defineStore('banner', {
   state: (): BannerStore => ({
     banners: { singelton: null, array: [] },
-    errors: [],
+    errors: [
+      { status: 100, message: "must have required property 'label'", type: INFO },
+      { status: 300, message: "must have required property 'label'", type: WARNING },
+      { status: 200, statusType: SUCCES, type: SUCCESS },
+      { status: 401, statusType: UNAUTHORIZED, type: ERROR },
+      //   { status: 100, type: INFO },
+      //   { status: 300, type: WARNING },
+      //   { status: 200, statusType: SUCCES, type: SUCCESS },
+      //   { status: 401, statusType: UNAUTHORIZED, type: ERROR },
+      //   { status: 100, type: INFO },
+      //   { status: 300, type: WARNING },
+      //   { status: 200, statusType: SUCCES, type: SUCCESS },
+      //   { status: 401, statusType: UNAUTHORIZED, type: ERROR },
+      //   { status: 100, type: INFO },
+      //   { status: 300, type: WARNING },
+      //   { status: 200, statusType: SUCCES, type: SUCCESS },
+      //   { status: 401, statusType: UNAUTHORIZED, type: ERROR },
+      {
+        status: 400,
+        statusType: BAD_REQUEST,
+        type: ERROR,
+        instancePath: 'label',
+        message: "must have required property 'label'",
+      },
+    ],
   }),
   actions: {
     setBanners(error: AxiosError<ResponseError>) {
@@ -34,9 +53,13 @@ export const useBannerStore = defineStore('banner', {
         if (Array.isArray(data)) this.banners.array = data
         else {
           this.banners.singelton = data
-          this.errors = [...this.errors, { status, statusType: data, type: ERROR }]
+          this.errors = [...this.errors, singeltonBanner({ status, statusType: data })]
         }
       }
+    },
+    resetBanners(index?: number) {
+      if (typeof index === 'number') this.errors = this.errors.filter((_, i) => i !== index)
+      else this.errors = []
     },
   },
   getters: {
