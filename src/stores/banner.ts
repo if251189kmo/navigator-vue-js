@@ -18,10 +18,10 @@ export const useBannerStore = defineStore('banner', {
   state: (): BannerStore => ({
     banners: { singelton: null, array: [] },
     errors: [
-      { status: 100, message: "must have required property 'label'", type: INFO },
-      { status: 300, message: "must have required property 'label'", type: WARNING },
-      { status: 200, statusType: SUCCES, type: SUCCESS },
-      { status: 401, statusType: UNAUTHORIZED, type: ERROR },
+      { status: 100, message: "It's INFO message", type: INFO },
+      { status: 300, message: "It's WARNING message", type: WARNING },
+      { status: 200, statusType: SUCCES, message: 'Обновлено', type: SUCCESS },
+      { status: 401, statusType: UNAUTHORIZED, message: 'Не авторизовано', type: ERROR },
       //   { status: 100, type: INFO },
       //   { status: 300, type: WARNING },
       //   { status: 200, statusType: SUCCES, type: SUCCESS },
@@ -39,7 +39,8 @@ export const useBannerStore = defineStore('banner', {
         statusType: BAD_REQUEST,
         type: ERROR,
         instancePath: 'label',
-        message: "must have required property 'label'",
+        message:
+          "must have required property 'label' must have required property 'label'must have required property 'label' must have required property 'label'",
       },
     ],
   }),
