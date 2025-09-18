@@ -13,13 +13,15 @@ type SingeltonBanner = {
 
 const getBannerType = (status: BannerUi['status']) => {
   const isInfo = status >= 100 && status < 200
+   const isSuccess = status >= 200 && status < 300
   const isWarning = status >= 301 && status < 400
   const isError = status >= 400 && status < 500
 
   if (isInfo) return INFO
   else if (isError) return ERROR
   else if (isWarning) return WARNING
-  else return SUCCESS
+  else  if (isSuccess) return SUCCESS
+  else return ERROR
 }
 
 const singeltonBanner = ({ status, statusType = NO_STATUS, message = '' }: SingeltonBanner) => {
