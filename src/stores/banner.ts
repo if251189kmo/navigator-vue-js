@@ -51,6 +51,7 @@ export const useBannerStore = defineStore('banner', {
       if (response) {
         const { status, data } = response
 
+        // TODO: обробити помилки валідації порм
         if (Array.isArray(data)) this.banners.array = data
         else {
           this.banners.singelton = data
