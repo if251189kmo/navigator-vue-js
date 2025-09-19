@@ -1,5 +1,9 @@
 <template>
-  <q-card :class="$style.tab" dark bordered>
+  <q-card
+    :class="[$style.tab, isTabLast && $style.tabLast, isTabBeforeLast && $style.tabBeforeLast]"
+    dark
+    bordered
+  >
     <q-card-section :class="$style.title">
       <div :class="$style.label">
         <div :class="$style.icon" v-if="tab.iconUrl !== ''"><img src="{{tab.iconUrl}}" /></div>
@@ -79,12 +83,16 @@ import Dialogs from 'src/constants/dialogs'
 import type { RenderTabProps } from './types'
 import { dialogs } from './json/index.json'
 import CreateTab from './CreateTab.vue'
+import { computed } from 'vue'
 
 const { EDIT_TAB, CREATE_TAB, DELETE_TAB } = Dialogs
-const { tab } = defineProps<RenderTabProps>()
+const { tab, index, length } = defineProps<RenderTabProps>()
 const dialogsStore = useDialogsStore()
 const loginStore = useLoginStore()
 const { getAuth } = storeToRefs(loginStore)
+
+const isTabLast = computed(() => length % 2 === 0 && length === index)
+const isTabBeforeLast = computed(() => length % 2 === 0 && length - 1 === index)
 
 const editDialog = {
   name: `${EDIT_TAB}${tab.id}`,
@@ -103,10 +111,17 @@ const createDialog = {
 </script>
 
 <style module lang="scss">
+.tabLast {
+  border-radius: 4px 4px 25px 4px;
+}
+
+.tabBeforeLast {
+  border-radius: 4px 4px 4px 25px;
+}
+
 .tab {
   margin: 10px;
-
-  width: 45%;
+  width: 47%;
   background-color: rgba(255, 255, 255, 0.431);
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.179);
 
