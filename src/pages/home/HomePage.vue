@@ -1,8 +1,9 @@
 <template>
   <q-intersection transition="scale">
     <div :class="$style.tabs">
-      <RenderTab v-for="tab in getTabs" :key="tab.id" :tab="tab" /></div
-  ></q-intersection>
+      <RenderTab v-for="tab in getTabs" :key="tab.id" :tab="tab" />
+    </div>
+  </q-intersection>
 </template>
 
 <script setup lang="ts">
