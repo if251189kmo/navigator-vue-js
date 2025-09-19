@@ -25,7 +25,7 @@
             <q-icon v-else color="negative" name="cancel" />
           </q-td>
         </template>
-        <template v-slot:body-cell-actions="props">
+        <template v-if="getAuth" v-slot:body-cell-actions="props">
           <q-td :class="$style.actions" :props="props">
             <q-btn round size="0.5rem" @click="onEdit(props.row)" color="warning" icon="edit" />
             <q-btn
@@ -52,31 +52,46 @@ import { storeToRefs } from 'pinia'
 import Progresses from 'src/constants/progresses'
 import type { LinkUi } from 'src/models'
 import { useHomeStore } from 'src/stores/home'
-import { toRaw } from 'vue'
+import { useLoginStore } from 'src/stores/login'
+import { computed, toRaw } from 'vue'
 
 const { PROGRESS_PAGE } = Progresses
 const homeStore = useHomeStore()
+const loginStore = useLoginStore()
+const { getAuth } = storeToRefs(loginStore)
 const { getLinks } = storeToRefs(homeStore)
 
-const columns = [
-  { name: 'id', align: 'left' as const, label: 'ID', field: (row: LinkUi) => row.id },
-  { name: 'code', align: 'center' as const, label: 'Код', field: (row: LinkUi) => row.code },
-  { name: 'label', align: 'left' as const, label: 'Назва', field: (row: LinkUi) => row.label },
-  { name: 'url', align: 'left' as const, label: 'Url', field: (row: LinkUi) => row.url },
-  { name: 'new', align: 'center' as const, label: 'Нова ссилки', field: (row: LinkUi) => row.new },
-  {
-    name: 'order',
-    align: 'center' as const,
-    label: 'Порядок',
-    field: (row: LinkUi) => row.order,
-  },
-  {
-    name: 'actions',
-    align: 'center' as const,
-    label: 'Дії',
-    field: () => 'actions',
-  },
-]
+const columns = computed(() => {
+  const base = [
+    { name: 'id', align: 'left' as const, label: 'ID', field: (row: LinkUi) => row.id },
+    { name: 'code', align: 'center' as const, label: 'Код', field: (row: LinkUi) => row.code },
+    { name: 'label', align: 'left' as const, label: 'Назва', field: (row: LinkUi) => row.label },
+    { name: 'url', align: 'left' as const, label: 'Url', field: (row: LinkUi) => row.url },
+    {
+      name: 'new',
+      align: 'center' as const,
+      label: 'Нова ссилка',
+      field: (row: LinkUi) => row.new,
+    },
+    {
+      name: 'order',
+      align: 'center' as const,
+      label: 'Порядок',
+      field: (row: LinkUi) => row.order,
+    },
+  ]
+
+  if (getAuth.value) {
+    base.push({
+      name: 'actions',
+      align: 'center' as const,
+      label: 'Дії',
+      field: (row: LinkUi) => row.id,
+    })
+  }
+
+  return base
+})
 
 const onEdit = (link: LinkUi) => {
   const raw = toRaw(link)
