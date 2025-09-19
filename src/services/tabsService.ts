@@ -46,10 +46,10 @@ const deleteTab = async (id: DeleteTabForm) => {
   dialogsStore.closeAllDialogs()
 }
 
-const getLinks = async () => {
-  const { data } = await fetchWrapper(api.get<LinkServer[]>(urls.links.get), {
-    progressName: NO_PROGRESS,
-  })
+const getLinks = async (params: FetchOptions = {
+  progressName: NO_PROGRESS,
+}) => {
+  const { data } = await fetchWrapper(api.get<LinkServer[]>(urls.links.get), params)
   return data
 }
 

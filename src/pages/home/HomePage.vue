@@ -1,7 +1,13 @@
 <template>
   <q-intersection transition="scale">
-    <div :class="$style.tabs">
-      <RenderTab v-for="tab in getTabs" :key="tab.id" :tab="tab" />
+    <div v-if="getTabs.length > 0" :class="$style.tabs">
+      <RenderTab
+        v-for="(tab, i) in getTabs"
+        :index="i + 1"
+        :length="getTabs.length"
+        :key="tab.id"
+        :tab="tab"
+      />
     </div>
   </q-intersection>
 </template>

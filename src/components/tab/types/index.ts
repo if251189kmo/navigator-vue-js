@@ -35,7 +35,7 @@ type EditTabForm = {
   groups: Record<string, TabUi['groups'][number]>
 }
 
-type RenderTabProps = TabProps
+type RenderTabProps = { index: number; length: number } & TabProps
 type EditTabProps = { tab: TabProps['tab']; dialogName: DialogProps['name'] }
 type DeleteTabProps = { id: TabProps['tab']['id']; dialogName: DialogProps['name'] }
 type CreateTabProps = { dialogName: DialogProps['name'] }

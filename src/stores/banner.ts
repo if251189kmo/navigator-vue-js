@@ -6,6 +6,9 @@ import type { ArrayBannerServer, BannerUi, SingeltonBannerServer } from 'src/mod
 
 const { INTERNAL_SERVER } = ServerStatuses
 
+// const { ERROR, WARNING, SUCCESS, INFO } = Bannerss
+// const { UNAUTHORIZED, BAD_REQUEST, SUCCES } = ServerStatuses
+
 type ResponseError = ArrayBannerServer[] | ServerStatuses
 type BannerStore = {
   banners: { singelton: SingeltonBannerServer; array: ArrayBannerServer[] }

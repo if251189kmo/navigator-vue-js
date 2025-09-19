@@ -2,8 +2,8 @@
   <div :class="$style.myProgress">
     <div :class="$style.progress" v-if="show">
       <div :class="$style.box">
-        <q-circular-progress rounded indeterminate size="50px" color="orange" />
-        <div>Progress ...</div>
+        <q-spinner-gears size="100px" color="orange" />
+        <div :class="$style.title">{{ title }}</div>
       </div>
     </div>
     <slot />
@@ -14,6 +14,7 @@
 import { useProgressStore } from 'src/stores/progress'
 import { computed } from 'vue'
 import type { ProgressProps } from './types'
+import { title } from './json/index.json'
 
 const { name } = defineProps<ProgressProps>()
 const store = useProgressStore()
@@ -40,8 +41,9 @@ const show = computed(() => store.progresses[name]?.run)
       text-align: center;
     }
 
-    .box > div {
+    .box > .title {
       margin: 10px;
+      font-size: 18px;
       letter-spacing: 2px;
     }
   }
