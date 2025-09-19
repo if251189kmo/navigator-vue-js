@@ -6,9 +6,6 @@ import type { ArrayBannerServer, BannerUi, SingeltonBannerServer } from 'src/mod
 
 const { INTERNAL_SERVER } = ServerStatuses
 
-// const { ERROR, WARNING, SUCCESS, INFO } = Bannerss
-// const { UNAUTHORIZED, BAD_REQUEST, SUCCES } = ServerStatuses
-
 type ResponseError = ArrayBannerServer[] | ServerStatuses
 type BannerStore = {
   banners: { singelton: SingeltonBannerServer; array: ArrayBannerServer[] }
@@ -18,20 +15,7 @@ type BannerStore = {
 export const useBannerStore = defineStore('banner', {
   state: (): BannerStore => ({
     banners: { singelton: null, array: [] },
-    errors: [
-      // { status: 100, message: "It's INFO message", type: INFO },
-      // { status: 300, message: "It's WARNING message", type: WARNING },
-      // { status: 200, statusType: SUCCES, message: 'Обновлено', type: SUCCESS },
-      // { status: 401, statusType: UNAUTHORIZED, message: 'Не авторизовано', type: ERROR },
-      // {
-      //   status: 400,
-      //   statusType: BAD_REQUEST,
-      //   type: ERROR,
-      //   instancePath: 'label',
-      //   message:
-      //     "must have required property 'label' must have required property 'label'must have required property 'label' must have required property 'label'",
-      // },
-    ],
+    errors: [],
   }),
   actions: {
     setBanners(error: AxiosError<ResponseError>) {
@@ -47,7 +31,7 @@ export const useBannerStore = defineStore('banner', {
           this.errors = [...this.errors, singeltonBanner({ status, statusType: data })]
         }
       } else {
-        const err = { status: 500, statusType: INTERNAL_SERVER, message: 'Сервер не відповідає' }
+        const err = { status: 500, statusType: INTERNAL_SERVER }
 
         this.banners.singelton = err.statusType
         this.errors = [...this.errors, singeltonBanner(err)]

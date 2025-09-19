@@ -1,0 +1,6 @@
+{
+  "errors": {
+    "internalServer": "Сервер не відповідає",
+    "unauthorized": "Не авторизовано"
+  }
+}

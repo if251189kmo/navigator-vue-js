@@ -9,6 +9,10 @@
         :tab="tab"
       />
     </div>
+    <div v-else :class="$style.skeletons">
+      <TabSkeleton :classes="$style.tabSkeletonFirst" />
+      <TabSkeleton :classes="$style.tabSkeletonLust" />
+    </div>
   </q-intersection>
 </template>
 
@@ -16,6 +20,7 @@
 import { storeToRefs } from 'pinia'
 import RenderTab from '../../components/tab/RenderTab.vue'
 import { useHomeStore } from 'src/stores/home'
+import TabSkeleton from 'src/components/skeletons/TabSkeleton.vue'
 
 const homeStore = useHomeStore()
 const { getTabs } = storeToRefs(homeStore)
@@ -24,7 +29,8 @@ void homeStore.fetchTabs()
 </script>
 
 <style module lang="scss">
-.tabs {
+.tabs,
+.skeletons {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -33,5 +39,21 @@ void homeStore.fetchTabs()
   border-radius: 4px 4px 50px 50px;
   padding: 20px;
   box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.309);
+}
+
+.skeletons {
+  .tabSkeletonFirst,
+  .tabSkeletonLust {
+    width: 49%;
+    height: 300px;
+  }
+
+  .tabSkeletonFirst {
+    border-radius: 4px 4px 4px 30px;
+  }
+
+  .tabSkeletonLust {
+    border-radius: 4px 4px 30px 4px;
+  }
 }
 </style>

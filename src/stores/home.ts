@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { FetchOptions } from 'src/boot/axios'
+import { db } from 'src/db'
 import type { LinkServer, TabServer } from 'src/models'
 import { getLinks, getTabs } from 'src/services/tabsService'
 
@@ -18,16 +19,35 @@ export const useHomeStore = defineStore('home', {
     },
   }),
   actions: {
+    // TODO: Зарефакторити
     async fetchTabs(params?: FetchOptions) {
-      const data = await getTabs(params)
+      try {
+        const { tabs, links } = await getTabs(params)
 
-      this.home.tabs = data.tabs
-      this.home.links = data.links
+        this.home.tabs = tabs
+        this.home.links = links
+
+        await db.tabs.clear()
+        await db.tabs.bulkAdd(tabs)
+
+        await db.links.clear()
+        await db.links.bulkAdd(links)
+      } catch {
+        this.home.tabs = await db.tabs.toArray()
+        this.home.links = await db.links.toArray()
+      }
     },
     async fetchLinks(params?: FetchOptions) {
-      const links = await getLinks(params)
+      try {
+        const links = await getLinks(params)
 
-      this.home.links = links
+        this.home.links = links
+
+        await db.links.clear()
+        await db.links.bulkAdd(links)
+      } catch {
+        this.home.links = await db.links.toArray()
+      }
     },
   },
   getters: {
@@ -40,7 +60,9 @@ export const useHomeStore = defineStore('home', {
         })),
       }))
     },
-    getLinks: (state) => state.home.links,
+    getLinks: (state) => {
+      return state.home.links
+    },
   },
 })
 

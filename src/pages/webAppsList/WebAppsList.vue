@@ -1,14 +1,40 @@
 <template>
   <q-intersection transition="scale">
     <div :class="$style.webAppsList">
-      <q-table title="Treats" :rows="getLinks" :columns="columns" row-key="index">
+      <q-table title="Ссилки" :rows="getLinks" :columns="columns" row-key="index">
+        <template v-slot:body-cell-code="props">
+          <q-td :class="$style.code" :props="props">
+            <div>{{ props.row.code }}</div>
+          </q-td>
+        </template>
+        <template v-slot:body-cell-label="props">
+          <q-td :class="$style.label" :props="props">
+            {{ props.row.label }}
+          </q-td>
+        </template>
         <template v-slot:body-cell-url="props">
+          <q-td :class="$style.url" :props="props">
+            <a :href="props.row.url" target="_blank" rel="noopener noreferrer">
+              {{ props.row.url }}
+            </a>
+          </q-td>
+        </template>
+        <template v-slot:body-cell-new="props">
           <q-td :props="props">
-            <q-badge class="my-table-url">
-              <a href="{{ props.row.url }}" target="_blank" rel="noopener noreferrer">{{
-                props.row.url
-              }}</a>
-            </q-badge>
+            <q-icon v-if="props.row.new" color="positive" name="done" />
+            <q-icon v-else color="negative" name="cancel" />
+          </q-td>
+        </template>
+        <template v-slot:body-cell-actions="props">
+          <q-td :class="$style.actions" :props="props">
+            <q-btn round size="0.5rem" @click="onEdit(props.row)" color="warning" icon="edit" />
+            <q-btn
+              round
+              size="0.5rem"
+              @click="onDelete(props.row.id)"
+              color="negative"
+              icon="delete"
+            />
           </q-td>
         </template>
       </q-table>
@@ -20,30 +46,48 @@
   </q-intersection>
 </template>
 
+// TODO: Доробити
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import Progresses from 'src/constants/progresses'
 import type { LinkUi } from 'src/models'
 import { useHomeStore } from 'src/stores/home'
+import { toRaw } from 'vue'
 
+const { PROGRESS_PAGE } = Progresses
 const homeStore = useHomeStore()
 const { getLinks } = storeToRefs(homeStore)
 
 const columns = [
-  { name: 'id', align: 'left' as const, label: 'id', field: (row: LinkUi) => row.id },
-  { name: 'code', align: 'left' as const, label: 'code', field: (row: LinkUi) => row.code },
-  { name: 'label', align: 'left' as const, label: 'label', field: (row: LinkUi) => row.label },
-  { name: 'url', align: 'left' as const, label: 'url', field: (row: LinkUi) => row.url },
-  { name: 'new', align: 'left' as const, label: 'new', field: (row: LinkUi) => row.new },
+  { name: 'id', align: 'left' as const, label: 'ID', field: (row: LinkUi) => row.id },
+  { name: 'code', align: 'center' as const, label: 'Код', field: (row: LinkUi) => row.code },
+  { name: 'label', align: 'left' as const, label: 'Назва', field: (row: LinkUi) => row.label },
+  { name: 'url', align: 'left' as const, label: 'Url', field: (row: LinkUi) => row.url },
+  { name: 'new', align: 'center' as const, label: 'Нова ссилки', field: (row: LinkUi) => row.new },
   {
     name: 'order',
-    align: 'left' as const,
-    label: 'order',
+    align: 'center' as const,
+    label: 'Порядок',
     field: (row: LinkUi) => row.order,
+  },
+  {
+    name: 'actions',
+    align: 'center' as const,
+    label: 'Дії',
+    field: () => 'actions',
   },
 ]
 
-void homeStore.fetchLinks({ progressName: Progresses.PROGRESS_PAGE })
+const onEdit = (link: LinkUi) => {
+  const raw = toRaw(link)
+
+  console.log('onEdit', raw)
+}
+const onDelete = (id: LinkUi['id']) => {
+  console.log('onDelete', id)
+}
+
+void homeStore.fetchLinks({ progressName: PROGRESS_PAGE })
 </script>
 
 <style module lang="scss">
@@ -53,6 +97,29 @@ void homeStore.fetchLinks({ progressName: Progresses.PROGRESS_PAGE })
     width: 100%;
     display: flex;
     justify-content: flex-end;
+  }
+
+  .code > div {
+    border-radius: 4px;
+    border: 1px solid $accent;
+  }
+
+  .label {
+    font-style: italic;
+  }
+
+  .url {
+    color: $primary;
+  }
+
+  .url:hover {
+    text-decoration: underline;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
 }
 </style>

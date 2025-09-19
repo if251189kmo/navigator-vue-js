@@ -19,12 +19,10 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { Bannerss } from 'src/constants/banners'
 import { useBannerStore } from 'src/stores/banner'
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-
-const { ERROR, WARNING, SUCCESS, INFO } = Bannerss
+import { getIconConfig } from './utils'
 
 const bannerStore = useBannerStore()
 const { getBannerErrors } = storeToRefs(bannerStore)
@@ -33,21 +31,6 @@ const prevPath = ref(route.fullPath)
 
 const onClose = (i: number) => {
   bannerStore.resetBanners(i)
-}
-
-const getIconConfig = (type: Bannerss) => {
-  switch (type) {
-    case ERROR:
-      return { name: 'error', bg: '#f44336' }
-    case WARNING:
-      return { name: 'warning', bg: '#ff9800' }
-    case SUCCESS:
-      return { name: 'check_circle', bg: '#4caf50' }
-    case INFO:
-      return { name: 'info', bg: '#2196f3' }
-    default:
-      return { name: 'help', bg: '#9e9e9e' }
-  }
 }
 
 watch(
