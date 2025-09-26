@@ -13,6 +13,7 @@
 
       <q-btn-dropdown :class="$style.actions" v-if="getAuth" flat color="positive" icon="settings">
         <q-list>
+          <!-- TODO: зарефаторити, добавити labels -->
           <q-item clickable v-close-popup>
             <q-item-section>
               <q-btn
