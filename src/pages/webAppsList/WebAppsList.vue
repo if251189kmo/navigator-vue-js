@@ -1,4 +1,6 @@
 <template>
+  <!-- // TODO: пеотрібно подумати над винесенням списку 
+                Links можливо у компонент типу RenderAdminLinks -->
   <q-intersection transition="scale">
     <div :class="$style.webAppsList">
       <q-table :rows="getLinks" :columns="columns" row-key="index">
