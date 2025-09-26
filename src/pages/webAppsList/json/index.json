@@ -1,0 +1,18 @@
+{
+  "title": "Ссилки",
+  "table": {
+    "columns": {
+      "id": { "label": "ID" },
+      "code": { "label": "Код" },
+      "label": { "label": "Назва" },
+      "url": { "label": "Посилання" },
+      "new": { "label": "Нова ссилка" },
+      "order": { "label": "Порядок" },
+      "actions": { "label": "Дії" }
+    }
+  },
+  "buttons": {
+    "goHome": { "label": "Повернктись на головну сторінку" },
+    "createLink": { "label": "Створити нове посилання" }
+  }
+}

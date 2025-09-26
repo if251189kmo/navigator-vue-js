@@ -1,7 +1,7 @@
 <template>
   <q-intersection transition="scale">
     <div :class="$style.webAppsList">
-      <q-table title="Ссилки" :rows="getLinks" :columns="columns" row-key="index">
+      <q-table :title="title" :rows="getLinks" :columns="columns" row-key="index">
         <template v-slot:body-cell-code="props">
           <q-td :class="$style.code" :props="props">
             <div>{{ props.row.code }}</div>
@@ -40,7 +40,7 @@
       </q-table>
 
       <div :class="$style.navigateBtn">
-        <q-btn to="/" color="primary" label="Повернутись на головну сторінку" />
+        <q-btn to="/" color="primary" v-bind="buttons.goHome" />
       </div>
     </div>
   </q-intersection>
@@ -54,6 +54,7 @@ import type { LinkUi } from 'src/models'
 import { useHomeStore } from 'src/stores/home'
 import { useLoginStore } from 'src/stores/login'
 import { computed, toRaw } from 'vue'
+import { title, table, buttons } from './json/index.json'
 
 const { PROGRESS_PAGE } = Progresses
 const homeStore = useHomeStore()
@@ -63,20 +64,30 @@ const { getLinks } = storeToRefs(homeStore)
 
 const columns = computed(() => {
   const base = [
-    { name: 'id', align: 'left' as const, label: 'ID', field: (row: LinkUi) => row.id },
-    { name: 'code', align: 'center' as const, label: 'Код', field: (row: LinkUi) => row.code },
-    { name: 'label', align: 'left' as const, label: 'Назва', field: (row: LinkUi) => row.label },
-    { name: 'url', align: 'left' as const, label: 'Url', field: (row: LinkUi) => row.url },
+    { name: 'id', align: 'left' as const, ...table.columns.id, field: (row: LinkUi) => row.id },
+    {
+      name: 'code',
+      align: 'center' as const,
+      ...table.columns.code,
+      field: (row: LinkUi) => row.code,
+    },
+    {
+      name: 'label',
+      align: 'left' as const,
+      ...table.columns.label,
+      field: (row: LinkUi) => row.label,
+    },
+    { name: 'url', align: 'left' as const, ...table.columns.url, field: (row: LinkUi) => row.url },
     {
       name: 'new',
       align: 'center' as const,
-      label: 'Нова ссилка',
+      ...table.columns.new,
       field: (row: LinkUi) => row.new,
     },
     {
       name: 'order',
       align: 'center' as const,
-      label: 'Порядок',
+      ...table.columns.order,
       field: (row: LinkUi) => row.order,
     },
   ]
@@ -85,7 +96,7 @@ const columns = computed(() => {
     base.push({
       name: 'actions',
       align: 'center' as const,
-      label: 'Дії',
+      ...table.columns.actions,
       field: (row: LinkUi) => row.id,
     })
   }
