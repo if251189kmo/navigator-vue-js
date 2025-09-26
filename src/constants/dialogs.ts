@@ -9,6 +9,7 @@ enum Dialogs {
   // Link
   EDIT_LINK = 'edit_link_',
   DELETE_LINK = 'delete_link_',
+  CREATE_LINK = 'create_link',
 }
 
 export default Dialogs

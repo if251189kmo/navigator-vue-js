@@ -1,7 +1,21 @@
 <template>
   <q-intersection transition="scale">
     <div :class="$style.webAppsList">
-      <q-table :title="title" :rows="getLinks" :columns="columns" row-key="index">
+      <q-table :rows="getLinks" :columns="columns" row-key="index">
+        <template v-slot:top>
+          <!-- // TODO: допрацювати THeader -->
+          <div class="row items-center justify-between q-pa-sm full-width">
+            <div class="text-h6 text-primary">
+              {{ title }}
+            </div>
+            <q-btn color="primary" @click="onCreate" label="Додати" icon="add" flat />
+            <MyDialog v-bind="createDialog">
+              <template #content>
+                <CreateLink :dialogName="createDialog.name" />
+              </template>
+            </MyDialog>
+          </div>
+        </template>
         <template v-slot:body-cell-code="props">
           <q-td :class="$style.code" :props="props">
             <div>{{ props.row.code }}</div>
@@ -27,14 +41,30 @@
         </template>
         <template v-if="getAuth" v-slot:body-cell-actions="props">
           <q-td :class="$style.actions" :props="props">
-            <q-btn round size="0.5rem" @click="onEdit(props.row)" color="warning" icon="edit" />
             <q-btn
               round
               size="0.5rem"
-              @click="onDelete(props.row.id)"
+              @click="onEdit(editDialog(props.row).name)"
+              color="warning"
+              icon="edit"
+            />
+            <q-btn
+              round
+              size="0.5rem"
+              @click="onDelete(editDialog(props.row).name)"
               color="negative"
               icon="delete"
             />
+            <MyDialog v-bind="editDialog(props.row)">
+              <template #content>
+                <EditLink :dialogName="editDialog(props.row).name" :link="props.row" />
+              </template>
+            </MyDialog>
+            <MyDialog v-bind="deleteDialog(props.row)">
+              <template #content>
+                <DeleteLink :dialogName="deleteDialog(props.row).name" :id="props.row.id" />
+              </template>
+            </MyDialog>
           </q-td>
         </template>
       </q-table>
@@ -53,14 +83,37 @@ import Progresses from 'src/constants/progresses'
 import type { LinkUi } from 'src/models'
 import { useHomeStore } from 'src/stores/home'
 import { useLoginStore } from 'src/stores/login'
-import { computed, toRaw } from 'vue'
-import { title, table, buttons } from './json/index.json'
+import { computed } from 'vue'
+import { title, dialogs, table, buttons } from './json/index.json'
+import Dialogs from 'src/constants/dialogs'
+import EditLink from 'src/components/link/EditLink.vue'
+import DeleteLink from 'src/components/link/DeleteLink.vue'
+import CreateLink from 'src/components/link/CreateLink.vue'
+import MyDialog from 'src/components/dialog/MyDialog.vue'
+import { useDialogsStore } from 'src/stores/dialog'
 
 const { PROGRESS_PAGE } = Progresses
+const { EDIT_LINK, DELETE_LINK, CREATE_LINK } = Dialogs
 const homeStore = useHomeStore()
 const loginStore = useLoginStore()
+const dialogsStore = useDialogsStore()
 const { getAuth } = storeToRefs(loginStore)
 const { getLinks } = storeToRefs(homeStore)
+
+const editDialog = (link: LinkUi) => ({
+  name: `${EDIT_LINK}${link.id}`,
+  title: `${dialogs.edit.title} ${link.id} «${link.label}»`,
+})
+
+const deleteDialog = (link: LinkUi) => ({
+  name: `${DELETE_LINK}${link.id}`,
+  title: `${dialogs.delete.title} ${link.id} «${link.label}»`,
+})
+
+const createDialog = {
+  name: `${CREATE_LINK}`,
+  title: `${dialogs.create.title}`,
+}
 
 const columns = computed(() => {
   const base = [
@@ -69,15 +122,15 @@ const columns = computed(() => {
       name: 'code',
       align: 'center' as const,
       ...table.columns.code,
-      field: (row: LinkUi) => row.code,
+      field: ({ code }: LinkUi) => code,
     },
     {
       name: 'label',
       align: 'left' as const,
       ...table.columns.label,
-      field: (row: LinkUi) => row.label,
+      field: ({ label }: LinkUi) => label,
     },
-    { name: 'url', align: 'left' as const, ...table.columns.url, field: (row: LinkUi) => row.url },
+    { name: 'url', align: 'left' as const, ...table.columns.url, field: ({ url }: LinkUi) => url },
     {
       name: 'new',
       align: 'center' as const,
@@ -88,7 +141,7 @@ const columns = computed(() => {
       name: 'order',
       align: 'center' as const,
       ...table.columns.order,
-      field: (row: LinkUi) => row.order,
+      field: ({ order }: LinkUi) => order,
     },
   ]
 
@@ -97,20 +150,21 @@ const columns = computed(() => {
       name: 'actions',
       align: 'center' as const,
       ...table.columns.actions,
-      field: (row: LinkUi) => row.id,
+      field: ({ id }: LinkUi) => id,
     })
   }
 
   return base
 })
 
-const onEdit = (link: LinkUi) => {
-  const raw = toRaw(link)
-
-  console.log('onEdit', raw)
+const onCreate = () => {
+  dialogsStore.openDialog(createDialog.name)
 }
-const onDelete = (id: LinkUi['id']) => {
-  console.log('onDelete', id)
+const onEdit = (name: string) => {
+  dialogsStore.openDialog(name)
+}
+const onDelete = (name: string) => {
+  dialogsStore.openDialog(name)
 }
 
 void homeStore.fetchLinks({ progressName: PROGRESS_PAGE })
