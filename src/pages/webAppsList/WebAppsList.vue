@@ -1,16 +1,21 @@
 <template>
   <!-- // TODO: пеотрібно подумати над винесенням списку 
                 Links можливо у компонент типу RenderAdminLinks -->
-  <q-intersection transition="scale">
-    <div :class="$style.webAppsList">
+
+  <div :class="$style.webAppsList">
+    <q-intersection transition="scale" once>
       <q-table :rows="getLinks" :columns="columns" row-key="index">
         <template v-slot:top>
           <!-- // TODO: допрацювати THeader -->
-          <div class="row items-center justify-between q-pa-sm full-width">
+          <div :class="$style.tHead">
             <div class="text-h6 text-primary">
-              {{ title }}
+              {{ title.links }}
             </div>
-            <q-btn color="primary" @click="onCreate" label="Додати" icon="add" flat />
+            <div :class="$style.tHeadButtons">
+              <q-btn to="/" color="primary" v-bind="buttons.goHome" />
+              <q-btn color="primary" @click="onCreate" label="Додати" icon="add" flat />
+            </div>
+
             <MyDialog v-bind="createDialog">
               <template #content>
                 <CreateLink :dialogName="createDialog.name" />
@@ -70,18 +75,28 @@
           </q-td>
         </template>
       </q-table>
-
-      <div :class="$style.navigateBtn">
-        <q-btn to="/" color="primary" v-bind="buttons.goHome" />
+    </q-intersection>
+    <q-intersection v-if="getAuth" transition="scale" once>
+      <div v-if="getTabs.length > 0" :class="$style.tabs">
+        <RenderTab
+          v-for="(tab, i) in getTabs"
+          :index="i + 1"
+          :length="getTabs.length"
+          :key="tab.id"
+          :tab="tab"
+        />
       </div>
-    </div>
-  </q-intersection>
+      <div v-else :class="$style.skeletons">
+        <TabSkeleton :classes="$style.tabSkeletonFirst" />
+        <TabSkeleton :classes="$style.tabSkeletonLust" />
+      </div>
+    </q-intersection>
+  </div>
 </template>
 
 // TODO: Доробити
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import Progresses from 'src/constants/progresses'
 import type { LinkUi } from 'src/models'
 import { useHomeStore } from 'src/stores/home'
 import { useLoginStore } from 'src/stores/login'
@@ -93,14 +108,15 @@ import DeleteLink from 'src/components/link/DeleteLink.vue'
 import CreateLink from 'src/components/link/CreateLink.vue'
 import MyDialog from 'src/components/dialog/MyDialog.vue'
 import { useDialogsStore } from 'src/stores/dialog'
+import RenderTab from 'src/components/tab/RenderTab.vue'
+import TabSkeleton from 'src/components/skeletons/TabSkeleton.vue'
 
-const { PROGRESS_PAGE } = Progresses
 const { EDIT_LINK, DELETE_LINK, CREATE_LINK } = Dialogs
 const homeStore = useHomeStore()
 const loginStore = useLoginStore()
 const dialogsStore = useDialogsStore()
 const { getAuth } = storeToRefs(loginStore)
-const { getLinks } = storeToRefs(homeStore)
+const { getLinks, getTabs } = storeToRefs(homeStore)
 
 const editDialog = (link: LinkUi) => ({
   name: `${EDIT_LINK}${link.id}`,
@@ -169,16 +185,22 @@ const onDelete = (name: string) => {
   dialogsStore.openDialog(name)
 }
 
-void homeStore.fetchLinks({ progressName: PROGRESS_PAGE })
+void homeStore.fetchTabs()
 </script>
 
 <style module lang="scss">
 .webAppsList {
-  .navigateBtn {
-    margin-top: 20px;
+  .tHead {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+
+    .tHeadButtons {
+      margin: 20px 0;
+      display: flex;
+      gap: 10px;
+    }
   }
 
   .code > div {
@@ -202,6 +224,35 @@ void homeStore.fetchLinks({ progressName: PROGRESS_PAGE })
     display: flex;
     align-items: center;
     justify-content: space-around;
+  }
+
+  .tabs,
+  .skeletons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px 0 50px 0;
+
+    background-color: rgba(255, 255, 255, 0.841);
+    border-radius: 4px 4px 50px 50px;
+    padding: 20px;
+    box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.309);
+  }
+
+  .skeletons {
+    .tabSkeletonFirst,
+    .tabSkeletonLust {
+      width: 49%;
+      height: 300px;
+    }
+
+    .tabSkeletonFirst {
+      border-radius: 4px 4px 4px 30px;
+    }
+
+    .tabSkeletonLust {
+      border-radius: 4px 4px 30px 4px;
+    }
   }
 }
 </style>

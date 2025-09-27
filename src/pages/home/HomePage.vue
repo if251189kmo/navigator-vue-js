@@ -1,20 +1,18 @@
 <template>
-  <q-intersection transition="scale">
-    <transition-group name="fade" tag="ul">
-      <div v-if="getTabs.length > 0" :class="$style.tabs">
-        <RenderTab
-          v-for="(tab, i) in getTabs"
-          :index="i + 1"
-          :length="getTabs.length"
-          :key="tab.id"
-          :tab="tab"
-        />
-      </div>
-      <div v-else :class="$style.skeletons">
-        <TabSkeleton :classes="$style.tabSkeletonFirst" />
-        <TabSkeleton :classes="$style.tabSkeletonLust" />
-      </div>
-    </transition-group>
+  <q-intersection transition="scale" once>
+    <div v-if="getTabs.length > 0" :class="$style.tabs">
+      <RenderTab
+        v-for="(tab, i) in getTabs"
+        :index="i + 1"
+        :length="getTabs.length"
+        :key="tab.id"
+        :tab="tab"
+      />
+    </div>
+    <div v-else :class="$style.skeletons">
+      <TabSkeleton :classes="$style.tabSkeletonFirst" />
+      <TabSkeleton :classes="$style.tabSkeletonLust" />
+    </div>
   </q-intersection>
 </template>
 

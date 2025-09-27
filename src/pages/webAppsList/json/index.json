@@ -1,5 +1,5 @@
 {
-  "title": "Ссилки",
+  "title": { "links": "Ссилки" },
   "table": {
     "columns": {
       "id": { "label": "ID" },

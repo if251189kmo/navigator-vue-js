@@ -1,5 +1,5 @@
 <template>
-  <q-intersection transition="scale">
+  <q-intersection transition="scale" once>
     <div :class="$style.header">
       <h1 :class="$style.title">{{ labels.title }}</h1>
       <div :class="$style.logoBox">
